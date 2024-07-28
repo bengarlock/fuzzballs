@@ -10,7 +10,7 @@ const LiveStream = () => {
                 src="https://bengarlock.com/live/index.m3u8"
                 autoPlay={true}
                 controls={false}
-                width="100%"
+                width="80%"
                 height="auto"
             />
         </div>
