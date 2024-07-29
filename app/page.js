@@ -1,15 +1,25 @@
 'use client'
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
-
-function daysSince(dateString) {
-    const timeDifference = new Date() - new Date(dateString);
-    return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-}
 
 
 const LiveStream = () => {
+
+    const isMobile = () => /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+    const [onMobile, setOnMobile] = useState(false);
+
+    useEffect(() => {
+        setOnMobile(isMobile)
+    }, []);
+
+
+    const daysSince = (dateString) => {
+        const timeDifference = new Date() - new Date(dateString);
+        return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    }
+
+
     return (
         <div className='flex flex-col bg-gray-800 p-8 min-h-screen'>
 
@@ -31,12 +41,12 @@ const LiveStream = () => {
                     </p>
                 </div>
             </div>
-            <div className={'flex items-center justify-center bg-grey-1000 '}>
+            <div className={'flex items-center justify-center bg-grey-1000'}>
                 <HLSPlayer
                     src="https://bengarlock.com/live/index.m3u8"
                     autoPlay={true}
                     controls={true}
-                    width="50%"
+                    width={onMobile ? "100%" : "50%"}
                     height="auto"
                 />
             </div>
