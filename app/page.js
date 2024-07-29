@@ -2,6 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
+import Unplugged from "@/app/unplugged";
 
 
 const LiveStream = () => {
@@ -22,6 +23,7 @@ const LiveStream = () => {
 
     return (
         <div className='flex flex-col bg-gray-800 p-8 min-h-screen'>
+            <Unplugged />
 
             <div className='text-center p-6'>
                 <h1 className='mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400
