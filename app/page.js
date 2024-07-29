@@ -4,9 +4,7 @@ import React from 'react';
 import HLSPlayer from './HLSPlayer';
 
 function daysSince(dateString) {
-    const startDate = new Date(dateString);
-    const currentDate = new Date();
-    const timeDifference = currentDate - startDate;
+    const timeDifference = new Date() - new Date(dateString);
     return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 }
 
@@ -33,12 +31,12 @@ const LiveStream = () => {
                     </p>
                 </div>
             </div>
-            <div className={'bg-grey-1000 '}>
+            <div className={'flex items-center justify-center bg-grey-1000 '}>
                 <HLSPlayer
                     src="https://bengarlock.com/live/index.m3u8"
                     autoPlay={true}
                     controls={true}
-                    width="100%"
+                    width="50%"
                     height="auto"
                 />
             </div>
