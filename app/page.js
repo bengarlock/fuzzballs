@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
 import Unplugged from "@/app/unplugged";
 
-c
+
 const LiveStream = () => {
 
     const isMobile = () => /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
