@@ -2,24 +2,14 @@
 
 import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
-import Unplugged from "@/app/unplugged";
 
 
 const LiveStream = () => {
-
-    const isMobile = () => /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
-    const [onMobile, setOnMobile] = useState(false);
-
-    useEffect(() => {
-        setOnMobile(isMobile)
-    }, []);
-
 
     const daysSince = (dateString) => {
         const timeDifference = new Date() - new Date(dateString);
         return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     }
-
 
     return (
 
@@ -36,7 +26,7 @@ const LiveStream = () => {
                         Claire Ann - <span className="text-red-600">Red, </span>
                         Annabelle Bronstein - <span className="text-purple-600">Purple, </span>
                         Bunny MacDougal - <span className="text-green-600">Green, </span>
-                        and Magda - <span className="text-yellow-600">Yellow</span>
+                        and Magda - <span className="text-yellow-300">Yellow</span>
                     </p>
                     <p>We are {daysSince('2024-07-22')} days old</p>
                 </div>
