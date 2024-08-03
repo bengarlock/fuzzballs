@@ -1,18 +1,28 @@
 'use client'
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
-
-function daysSince(dateString) {
-    const startDate = new Date(dateString);
-    const currentDate = new Date();
-    const timeDifference = currentDate - startDate;
-    return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-}
+import Unplugged from "@/app/unplugged";
 
 
 const LiveStream = () => {
+
+    const isMobile = () => /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+    const [onMobile, setOnMobile] = useState(false);
+
+    useEffect(() => {
+        setOnMobile(isMobile)
+    }, []);
+
+
+    const daysSince = (dateString) => {
+        const timeDifference = new Date() - new Date(dateString);
+        return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    }
+
+
     return (
+
         <div className="flex flex-col bg-gray-800 p-8 min-h-screen w-full items-center">
             <div className="text-center p-6">
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
