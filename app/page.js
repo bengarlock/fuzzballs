@@ -31,7 +31,7 @@ const LiveStream = () => {
                     <p>We are {daysSince('2024-07-22')} days old</p>
                 </div>
             </div>
-            <div className="flex flex-col bg-gray-1000 justify-center w-3/4">
+            <div className="flex flex-col bg-gray-1000 justify-center w-full md:w-3/4">
                 <HLSPlayer
                     src="https://bengarlock.com/live/index.m3u8"
                     autoPlay={true}
