@@ -33,7 +33,7 @@ const LiveStream = () => {
                     <p className='p-2'>The color of our leg bands helps to identify us.</p>
                     <p>Our names are: </p>
                     <p>
-                        Claire Ann - <span className={'text-red-600'}>Red, </span>
+                        Claire Anne - <span className={'text-red-600'}>Red, </span>
                         Annabelle Bronstein - <span className={'text-purple-600'}>Purple, </span>
                         Bunny MacDougal - <span className={'text-green-600'}>Green, </span>
                         and Magda - <span className={'text-blue-600'}>Blue</span>
