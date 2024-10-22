@@ -13,25 +13,12 @@ const LiveStream = () => {
 
     return (
 
-        <div className="flex flex-col bg-gray-800 p-8 min-h-screen w-full items-center">
+        <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
             <div className="text-center p-6">
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                     Welcome to the Chickie Cam!
                 </h1>
-                <div>
-                    <p>Hello! We are the Lavender Orpington Chicks!</p>
-                    <p className="p-2">The color of our leg bands helps to identify us.</p>
-                    <p>Our names are:</p>
-                    <p>
-                        Claire Anne - <span className="text-pink-500">Pink, </span>
-                        Annabelle Bronstein - <span className="text-purple-600">Purple, </span>
-                        Bunny MacDougal - <span className="text-green-600">Green, </span>
-                        and Magda - <span className="text-yellow-300">Yellow</span>
-                    </p>
-                    <p>We are {daysSince('2024-07-22')} days old</p>
-                </div>
-            </div>
-            <div className="flex flex-col bg-gray-1000 justify-center w-full md:w-3/4">
+                <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                 <HLSPlayer
                     src="https://bengarlock.com/live/index.m3u8"
                     autoPlay={true}
@@ -39,7 +26,28 @@ const LiveStream = () => {
                     width="100%"
                     height="auto"
                 />
+
             </div>
+            <div className='flex flex-row w-3/4 items-center justify-evenly'>
+                <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
+                    <h1>Lavenders</h1>
+                    <div>Claire Anne - <span className="text-pink-500">Pink, </span></div>
+                    <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
+                    <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
+                    <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
+                    <div><p>We are {daysSince('2024-07-22')} days old</p></div>
+                </div>
+                <div className='flex flex-col bg-amber-600 p-2 m-2 items-center rounded-xl w-full'>
+                    <h1>Buffs</h1>
+                    <div>Carrie - <span className="text-pink-500">Pink, </span></div>
+                    <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
+                    <div>Samantha - <span className="text-green-600">Green, </span></div>
+                    <div>Miranda - <span className="text-red-800">Red</span></div>
+                    <div>We are {daysSince('2023-06-12')} days old</div>
+                </div>
+            </div>
+
+
         </div>
 
     );
