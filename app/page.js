@@ -11,6 +11,19 @@ const LiveStream = () => {
         return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     }
 
+    const formatDays = (days) =>  {
+        const years = Math.floor(days / 365);
+        const remainingDaysAfterYears = days % 365;
+        const months = Math.floor(remainingDaysAfterYears / 30);
+        const remainingDays = remainingDaysAfterYears % 30;
+
+        return {
+            years: years,
+            months: months,
+            days: remainingDays
+        };
+    }
+
     return (
 
         <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
