@@ -1,6 +1,3 @@
-'use client'
-
-import React, {useEffect, useState} from 'react';
 import HLSPlayer from './HLSPlayer';
 
 
@@ -59,8 +56,6 @@ const LiveStream = () => {
                     <div>We are {daysSince('2023-06-12')} days old</div>
                 </div>
             </div>
-
-
         </div>
 
     );
