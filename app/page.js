@@ -1,7 +1,17 @@
+'use client'
 import HLSPlayer from './HLSPlayer';
+import {useState, useEffect} from "react";
 
 
 const LiveStream = () => {
+
+    const [videoUrl, setVideoUrl] = useState('');
+
+    useEffect(() => {
+        const hlsUrl = 'https://bengarlock.com/live/index.m3u8';
+        const uniqueUrl = `${hlsUrl}?t=${new Date().getTime()}`;
+        setVideoUrl(uniqueUrl);
+    }, []);
 
     const daysSince = (dateString) => {
         const timeDifference = new Date() - new Date(dateString);
@@ -30,7 +40,7 @@ const LiveStream = () => {
                 </h1>
                 <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                 <HLSPlayer
-                    src="https://bengarlock.com/live/index.m3u8"
+                    src={videoUrl}
                     autoPlay={true}
                     controls={true}
                     width="100%"
