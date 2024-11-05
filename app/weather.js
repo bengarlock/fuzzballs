@@ -32,7 +32,7 @@ const Weather = () => {
     }
 
     const renderWeather = () => {
-        if (currentWeather.obs[0]) {
+        if (length(currentWeather.obs) > 0) {
             const temp_f = (currentWeather.obs[0].air_temperature * 9/5) + 32
             return Math.ceil(temp_f) + "\u00B0"
         }
