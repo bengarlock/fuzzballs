@@ -1,6 +1,6 @@
 'use client'
 import HLSPlayer from './HLSPlayer';
-// import Weather from "@/app/weather";
+import Weather from "@/app/weather";
 import {useState, useEffect} from "react";
 
 
@@ -44,7 +44,7 @@ const LiveStream = () => {
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                         Welcome to the Chickie Cam!
                     </h1>
-                    {/*<Weather />*/}
+                    <Weather />
                     <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                     <HLSPlayer
                         src={videoUrl}
