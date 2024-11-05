@@ -1,6 +1,4 @@
 'use client'
-
-
 import {useEffect, useState} from "react";
 
 const Weather = () => {
@@ -34,7 +32,7 @@ const Weather = () => {
     }
 
     const renderWeather = () => {
-        if (currentWeather) {
+        if (currentWeather[0]) {
             const temp_f = (currentWeather.obs[0].air_temperature * 9/5) + 32
             return Math.ceil(temp_f) + "\u00B0"
         }
