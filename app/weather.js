@@ -41,7 +41,7 @@ const Weather = () => {
     }
 
     return (
-        <div>{renderWeather()} F</div>
+        <div>Current Weather: {renderWeather()} F</div>
     )
 }
 

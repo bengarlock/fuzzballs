@@ -44,7 +44,7 @@ const LiveStream = () => {
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                         Welcome to the Chickie Cam!
                     </h1>
-                    <Weather />
+
                     <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                     <HLSPlayer
                         src={videoUrl}
@@ -55,7 +55,9 @@ const LiveStream = () => {
                     />
 
                 </div>
+                <Weather />
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
+
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
                         <h1>Lavenders</h1>
                         <div>Claire Anne - <span className="text-pink-500">Pink, </span></div>
