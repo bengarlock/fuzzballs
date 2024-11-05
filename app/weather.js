@@ -5,11 +5,12 @@ import {useEffect, useState} from "react";
 
 const Weather = () => {
 
-    const [currentWeather, setCurrentWeather] = useState({})
+    const [currentWeather, setCurrentWeather] = useState(null)
 
     useEffect(() => {
         fetchWeather()
     }, []);
+
 
     const fetchWeather = () => {
         const myHeaders = new Headers();
@@ -27,21 +28,20 @@ const Weather = () => {
         };
 
         fetch("https://bengarlock.com/api/v1/garden/weather/", requestOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => setCurrentWeather(result))
             .catch((error) => console.error(error));
     }
 
     const renderWeather = () => {
         if (currentWeather) {
-            console.log(currentWeather.obs)
+            const temp_f = (currentWeather.obs[0].air_temperature * 9/5) + 32
+            return Math.ceil(temp_f) + "\u00B0"
         }
     }
 
-
-
     return (
-        <div>{currentWeather.obs} </div>
+        <div>{renderWeather()} F</div>
     )
 }
 
