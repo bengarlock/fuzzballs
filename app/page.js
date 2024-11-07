@@ -34,9 +34,6 @@ const LiveStream = () => {
             }
         }
 
-        console.log(formatDays(daysSince('2024-07-22')))
-        console.log(formatDays(daysSince('2023-06-12')))
-
         return (
 
             <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
@@ -64,7 +61,8 @@ const LiveStream = () => {
                         <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
                         <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
                         <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
-                        <div><p>We are {daysSince('2024-07-22')} days old</p></div>
+                        {/*<div><p>We are {daysSince('2024-07-22')} days old</p></div>*/}
+                        <div><p>{formatDays(daysSince('2024-07-22'))}</p></div>
                     </div>
                     <div className='flex flex-col bg-amber-600 p-2 m-2 items-center rounded-xl w-full'>
                         <h1>Buffs</h1>
@@ -72,7 +70,7 @@ const LiveStream = () => {
                         <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
                         <div>Samantha - <span className="text-green-600">Green, </span></div>
                         <div>Miranda - <span className="text-red-800">Red</span></div>
-                        <div>We are {daysSince('2023-06-12')} days old</div>
+                        <div>{formatDays(daysSince('2023-06-12'))}</div>
                     </div>
                 </div>
             </div>
