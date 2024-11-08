@@ -1,6 +1,7 @@
 'use client'
 import HLSPlayer from './HLSPlayer';
 import Weather from "@/app/weather";
+import Age from "@/app/age";
 import {useState, useEffect} from "react";
 
 
@@ -13,26 +14,6 @@ const LiveStream = () => {
             const uniqueUrl = `${hlsUrl}?t=${new Date().getTime()}`;
             setVideoUrl(uniqueUrl);
         }, []);
-
-        const daysSince = (dateString) => {
-            const timeDifference = new Date() - new Date(dateString);
-            return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-        }
-
-        const formatDays = (days) => {
-            const years = Math.floor(days / 365);
-            const remainingDaysAfterYears = days % 365;
-            const months = Math.floor(remainingDaysAfterYears / 30);
-            const remainingDays = remainingDaysAfterYears % 30;
-
-            if (years > 1) {
-                return `We are ${years} years, ${months} months, and ${remainingDays} days old.`
-            } else if (years === 1) {
-                return `We are ${years} year, ${months} months, and ${remainingDays} days old.`
-            } else {
-                return `We are ${months} months and ${remainingDays} days old.`
-            }
-        }
 
         return (
 
@@ -52,7 +33,7 @@ const LiveStream = () => {
                     />
 
                 </div>
-                <Weather />
+                <Weather/>
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
@@ -61,8 +42,9 @@ const LiveStream = () => {
                         <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
                         <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
                         <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
-                        {/*<div><p>We are {daysSince('2024-07-22')} days old</p></div>*/}
-                        <div><p>{formatDays(daysSince('2024-07-22'))}</p></div>
+                        <div>
+                            <Age date={'2024-07-22'}/>
+                        </div>
                     </div>
                     <div className='flex flex-col bg-amber-600 p-2 m-2 items-center rounded-xl w-full'>
                         <h1>Buffs</h1>
@@ -70,7 +52,9 @@ const LiveStream = () => {
                         <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
                         <div>Samantha - <span className="text-green-600">Green, </span></div>
                         <div>Miranda - <span className="text-red-800">Red</span></div>
-                        <div>{formatDays(daysSince('2023-06-12'))}</div>
+                        <div>
+                            <Age date={'2023-06-12'}/>
+                        </div>
                     </div>
                 </div>
             </div>
