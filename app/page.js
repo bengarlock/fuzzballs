@@ -33,7 +33,7 @@ const LiveStream = () => {
                     />
 
                 </div>
-                <Weather/>
+                <Weather />
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>

@@ -37,15 +37,29 @@ const Weather = () => {
 
     const renderWeather = () => {
         if (currentWeather) {
-            const temp_f = (currentWeather.obs[0].air_temperature * 9/5) + 32
-            return Math.ceil(temp_f) + "\u00B0"
+            const temp_f = (currentWeather.obs[0].air_temperature * 9 / 5) + 32
+            const brightness = currentWeather.obs[0].brightness
+            return {
+                weather: Math.ceil(temp_f) + "\u00B0",
+                brightness: brightness,
+            }
         }
-
     }
 
     return (
-        <div>Current Weather: {renderWeather()} F</div>
-    )
+        <>
+            <div>
+                {renderWeather() ? (
+                    <div>
+                        {"Current Weather: " + renderWeather().weather + " F"}
+                        <br/>
+                        {"Brightness: " + (renderWeather() ? renderWeather().brightness : null)}
+                    </div>
+                ) : null}
+            </div>
+        </>
+    );
 }
+
 
 export default Weather
