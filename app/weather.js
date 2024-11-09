@@ -1,9 +1,11 @@
 'use client'
 import {useEffect, useState} from "react";
+import {globalStore} from "@/app/globalstore";
+
 
 const Weather = () => {
 
-    const [currentWeather, setCurrentWeather] = useState(null)
+    const {weather, setWeather} = globalStore()
 
     useEffect(() => {
         fetchWeather()
@@ -31,32 +33,20 @@ const Weather = () => {
 
         fetch("https://bengarlock.com/api/v1/garden/weather/", requestOptions)
             .then((response) => response.json())
-            .then((result) => setCurrentWeather(result))
+            .then((weather) => setWeather(weather.obs[0]))
             .catch((error) => console.error(error));
     }
 
     const renderWeather = () => {
-        if (currentWeather) {
-            const temp_f = (currentWeather.obs[0].air_temperature * 9 / 5) + 32
-            const brightness = currentWeather.obs[0].brightness
-            return {
-                weather: Math.ceil(temp_f) + "\u00B0",
-                brightness: brightness,
-            }
+        if (weather) {
+            const temp_f = (weather.air_temperature * 9 / 5) + 32
+            return "Current Weather: " + Math.ceil(temp_f) + "\u00B0" + " F"
         }
     }
 
     return (
         <>
-            <div>
-                {renderWeather() ? (
-                    <div>
-                        {"Current Weather: " + renderWeather().weather + " F"}
-                        <br/>
-                        {"Brightness: " + (renderWeather() ? renderWeather().brightness : null)}
-                    </div>
-                ) : null}
-            </div>
+            {renderWeather()}
         </>
     );
 }

@@ -2,21 +2,21 @@
 import HLSPlayer from './HLSPlayer';
 import Weather from "@/app/weather";
 import Age from "@/app/age";
-import {useState, useEffect} from "react";
+import {globalStore} from "@/app/globalstore";
 
 
 const LiveStream = () => {
 
-        const [videoUrl, setVideoUrl] = useState('');
+        const {weather, setWeather} = globalStore()
 
-        useEffect(() => {
-            const hlsUrl = 'https://bengarlock.com/fuzzballs/run/index.m3u8';
-            const uniqueUrl = `${hlsUrl}?t=${new Date().getTime()}`;
-            setVideoUrl(uniqueUrl);
-        }, []);
+        const renderURL = () => {
+            const hlsUrl = weather.brightness <= 1
+                ? 'https://bengarlock.com/fuzzballs/roost/index.m3u8'
+                : 'https://bengarlock.com/fuzzballs/run/index.m3u8'
+            return `${hlsUrl}?t=${new Date().getTime()}`
+        }
 
         return (
-
             <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
                 <div className="text-center p-6">
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
@@ -25,7 +25,7 @@ const LiveStream = () => {
 
                     <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                     <HLSPlayer
-                        src={videoUrl}
+                        src={renderURL()}
                         autoPlay={true}
                         controls={true}
                         width="100%"
@@ -33,7 +33,7 @@ const LiveStream = () => {
                     />
 
                 </div>
-                <Weather />
+                <Weather/>
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
