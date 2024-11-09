@@ -7,7 +7,7 @@ import {globalStore} from "@/app/globalstore";
 
 const LiveStream = () => {
 
-        const {weather, setWeather} = globalStore()
+        const {weather} = globalStore()
 
         const renderURL = () => {
             const hlsUrl = weather.brightness <= 1
@@ -19,7 +19,8 @@ const LiveStream = () => {
         return (
             <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
                 <div className="text-center p-6">
-                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight
+                    text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                         Welcome to the Chickie Cam!
                     </h1>
 
@@ -31,9 +32,10 @@ const LiveStream = () => {
                         width="100%"
                         height="auto"
                     />
-
                 </div>
+
                 <Weather/>
+
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
