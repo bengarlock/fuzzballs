@@ -10,7 +10,7 @@ const LiveStream = () => {
         const [videoUrl, setVideoUrl] = useState('');
 
         useEffect(() => {
-            const hlsUrl = 'https://bengarlock.com/live/index.m3u8';
+            const hlsUrl = 'https://bengarlock.com/fuzzballs/run/index.m3u8';
             const uniqueUrl = `${hlsUrl}?t=${new Date().getTime()}`;
             setVideoUrl(uniqueUrl);
         }, []);
