@@ -10,7 +10,7 @@ const LiveStream = () => {
         const {weather} = globalStore()
 
         const renderURL = () => {
-            const hlsUrl = weather.brightness < 10
+            const hlsUrl = weather.brightness < 15
                 ? 'https://bengarlock.com/fuzzballs/roost/index.m3u8'
                 : 'https://bengarlock.com/fuzzballs/run/index.m3u8'
             return `${hlsUrl}?t=${new Date().getTime()}`
