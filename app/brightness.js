@@ -13,7 +13,7 @@ const Brightness = () => {
     }
 
     return (
-        <div className="text-gray-900 text-xs">
+        <div className="text-gray-400 text-xs">
             {renderBrightness()}
         </div>
     )
