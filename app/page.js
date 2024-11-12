@@ -3,6 +3,7 @@ import HLSPlayer from './HLSPlayer';
 import Weather from "@/app/weather";
 import Age from "@/app/age";
 import {globalStore} from "@/app/globalstore";
+import Brightness from "@/app/brightness";
 
 
 const LiveStream = () => {
@@ -59,8 +60,8 @@ const LiveStream = () => {
                         </div>
                     </div>
                 </div>
+                <Brightness />
             </div>
-
         );
     }
 ;

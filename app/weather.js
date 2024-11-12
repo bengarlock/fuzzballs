@@ -1,5 +1,5 @@
 'use client'
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {globalStore} from "@/app/globalstore";
 
 
@@ -8,7 +8,7 @@ const Weather = () => {
     const {weather, setWeather} = globalStore()
 
     useEffect(() => {
-        fetchWeather()
+        fetchWeather();
     }, []);
 
 
