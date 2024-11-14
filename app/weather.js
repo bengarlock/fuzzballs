@@ -1,17 +1,23 @@
 'use client'
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {globalStore} from "@/app/globalstore";
+
 
 const Weather = () => {
 
-    const [currentWeather, setCurrentWeather] = useState(null)
+    const {weather, setWeather} = globalStore()
 
     useEffect(() => {
-        fetchWeather()
+        fetchWeather();
     }, []);
 
 
     const fetchWeather = () => {
         const myHeaders = new Headers();
+        const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+        if (csrfToken) {
+            myHeaders.append("X-CSRFToken", csrfToken.split('=')[1]);
+        }
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
@@ -27,20 +33,23 @@ const Weather = () => {
 
         fetch("https://bengarlock.com/api/v1/garden/weather/", requestOptions)
             .then((response) => response.json())
-            .then((result) => setCurrentWeather(result))
+            .then((weather) => setWeather(weather.obs[0]))
             .catch((error) => console.error(error));
     }
 
     const renderWeather = () => {
-        if (currentWeather && currentWeather.obs) {
-            const temp_f = (currentWeather.obs[0].air_temperature * 9 / 5) + 32
-            return Math.ceil(temp_f) + "\u00B0"
+        if (weather) {
+            const temp_f = (weather.air_temperature * 9 / 5) + 32
+            return "Current Weather: " + Math.ceil(temp_f) + "\u00B0" + " F"
         }
     }
 
     return (
-        <div>{renderWeather() ? "Current Weather: " + renderWeather() : null} F</div>
-    )
+        <>
+            {renderWeather()}
+        </>
+    );
 }
+
 
 export default Weather

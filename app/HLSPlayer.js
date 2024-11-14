@@ -16,7 +16,7 @@ const HLSPlayer = ({ src, autoPlay, controls, width, height }) => {
     }, [src]);
 
     return (
-        <video
+        <video className='rounded-xl'
             ref={videoRef}
             autoPlay={autoPlay}
             controls={controls}

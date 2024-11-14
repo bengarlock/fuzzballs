@@ -1,67 +1,42 @@
 'use client'
 import HLSPlayer from './HLSPlayer';
 import Weather from "@/app/weather";
-import {useState, useEffect} from "react";
+import Age from "@/app/age";
+import {globalStore} from "@/app/globalstore";
+import Brightness from "@/app/brightness";
 
 
 const LiveStream = () => {
 
-        const [videoUrl, setVideoUrl] = useState('');
+        const {weather} = globalStore()
 
-        useEffect(() => {
-            const hlsUrl = 'https://bengarlock.com/live/index.m3u8';
-            const uniqueUrl = `${hlsUrl}?t=${new Date().getTime()}`;
-            setVideoUrl(uniqueUrl);
-        }, []);
-
-        const daysSince = (dateString) => {
-            const timeDifference = new Date() - new Date(dateString);
-            return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const renderURL = () => {
+            const hlsUrl = weather.brightness < 15
+                ? 'https://bengarlock.com/fuzzballs/roost/index.m3u8'
+                : 'https://bengarlock.com/fuzzballs/run/index.m3u8'
+            return `${hlsUrl}?t=${new Date().getTime()}`
         }
-
-        const formatDays = (days) => {
-            const years = Math.floor(days / 365);
-            const remainingDaysAfterYears = days % 365;
-            const months = Math.floor(remainingDaysAfterYears / 30);
-            const remainingDays = remainingDaysAfterYears % 30;
-
-            if (years > 1) {
-                return `We are ${years} years, ${months} months, and ${remainingDays} days old.`
-            } else if (years === 1) {
-                return `We are ${years} year, ${months} months, and ${remainingDays} days old.`
-            } else {
-                return `We are ${months} months and ${remainingDays} days old.`
-            }
-        }
-
-        console.log(formatDays(daysSince('2024-07-22')))
-        console.log(formatDays(daysSince('2023-06-12')))
 
         return (
-
             <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
-                <script>
-                    (function(d,b,a,s,e){var t=b.createElement(a),
-                    fs=b.getElementsByTagName(a)[0];t.async=1;t.id=e;t.src=s;
-                    fs.parentNode.insertBefore(t,fs);})
-                    (window,document,'script','https://tag.demandbase.com/edfc31da3c22de40.min.js','demandbase_js_lib');
-                </script>
                 <div className="text-center p-6">
-                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight
+                    text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                         Welcome to the Chickie Cam!
                     </h1>
 
                     <p className="p-2">We are Lavender and Buff Orpington chickens</p>
                     <HLSPlayer
-                        src={videoUrl}
+                        src={renderURL()}
                         autoPlay={true}
                         controls={true}
                         width="100%"
                         height="auto"
                     />
-
                 </div>
+
                 <Weather/>
+
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
@@ -70,7 +45,9 @@ const LiveStream = () => {
                         <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
                         <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
                         <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
-                        <div><p>We are {daysSince('2024-07-22')} days old</p></div>
+                        <div>
+                            <Age date={'2024-07-22'}/>
+                        </div>
                     </div>
                     <div className='flex flex-col bg-amber-600 p-2 m-2 items-center rounded-xl w-full'>
                         <h1>Buffs</h1>
@@ -78,11 +55,13 @@ const LiveStream = () => {
                         <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
                         <div>Samantha - <span className="text-green-600">Green, </span></div>
                         <div>Miranda - <span className="text-red-800">Red</span></div>
-                        <div>We are {daysSince('2023-06-12')} days old</div>
+                        <div>
+                            <Age date={'2023-06-12'}/>
+                        </div>
                     </div>
                 </div>
+                <Brightness />
             </div>
-
         );
     }
 ;
