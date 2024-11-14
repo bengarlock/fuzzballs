@@ -40,6 +40,12 @@ const LiveStream = () => {
         return (
 
             <div className="flex flex-col bg-gray-800 p-8 min-h-screen justify-center items-center">
+                <script>
+                    (function(d,b,a,s,e){var t=b.createElement(a),
+                    fs=b.getElementsByTagName(a)[0];t.async=1;t.id=e;t.src=s;
+                    fs.parentNode.insertBefore(t,fs);})
+                    (window,document,'script','https://tag.demandbase.com/edfc31da3c22de40.min.js','demandbase_js_lib');
+                </script>
                 <div className="text-center p-6">
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                         Welcome to the Chickie Cam!
@@ -55,7 +61,7 @@ const LiveStream = () => {
                     />
 
                 </div>
-                <Weather />
+                <Weather/>
                 <div className='flex flex-col w-full md:flex-row md:w-2/3 items-center justify-evenly'>
 
                     <div className='flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full'>
