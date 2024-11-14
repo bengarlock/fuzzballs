@@ -18,7 +18,6 @@ const LiveStream = () => {
             script.id = 'demandbase_js_lib';
             document.body.appendChild(script);
 
-            // Optional cleanup if you need to remove the script on component unmount
             return () => {
                 document.body.removeChild(script);
             };
