@@ -4,11 +4,26 @@ import Weather from "@/app/weather";
 import Age from "@/app/age";
 import {globalStore} from "@/app/globalstore";
 import Brightness from "@/app/brightness";
+import {useEffect} from "react";
 
 
 const LiveStream = () => {
 
         const {weather} = globalStore()
+
+        useEffect(() => {
+            const script = document.createElement('script');
+            script.src = 'https://tag.demandbase.com/edfc31da3c22de40.min.js';
+            script.async = true;
+            script.id = 'demandbase_js_lib';
+            document.body.appendChild(script);
+
+            // Optional cleanup if you need to remove the script on component unmount
+            return () => {
+                document.body.removeChild(script);
+            };
+        }, []);
+
 
         const renderURL = () => {
             const hlsUrl = weather.brightness < 15
@@ -60,7 +75,7 @@ const LiveStream = () => {
                         </div>
                     </div>
                 </div>
-                <Brightness />
+                <Brightness/>
             </div>
         );
     }
