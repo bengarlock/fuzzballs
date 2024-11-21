@@ -62,7 +62,7 @@ const PeckingOrder = () => {
         return ladiesSorted.map((chicken, index) => (
             <div
                 key={chicken.id || index}
-                className={`flex flex-row p-2 justify-around w-1/2 m-1 rounded-xl ${chicken.bgColor}`}
+                className={`flex flex-row p-2 justify-around w-72 m-1 rounded-xl ${chicken.bgColor}`}
             >
                 <div className={chicken.bgColor}>
                     {chicken.rank === 1 ? <span className="mr-3">{crown}</span> : null}
@@ -75,7 +75,8 @@ const PeckingOrder = () => {
 
 
     return (
-        <div className="relative flex flex-col justify-center items-center bg-blue-950 rounded-xl p-5 m-3 ml-0 mr-0">
+        <div className="relative flex flex-col justify-center items-center bg-blue-950 rounded-xl
+         p-5 m-2 overflow-hidden">
             <h1>Pecking Order</h1>
             {renderPeckingOrder()}
         </div>

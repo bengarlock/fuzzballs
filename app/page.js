@@ -41,44 +41,48 @@ const LiveStream = () => {
                     </h1>
 
                     <p>We are Lavender and Buff Orpington chickens</p>
-                    <HLSPlayer
-                        src={renderURL()}
-                        autoPlay={true}
-                        controls={true}
-                        width="100%"
-                        height="auto"
-                    />
+                    <div className="m-2">
+                        <HLSPlayer
+                            src={renderURL()}
+                            autoPlay={true}
+                            controls={true}
+                            width="100%"
+                            height="auto"
+                        />
+                        <div className="m-2">
+                            <Weather/>
+                        </div>
 
-                    <Weather />
-                    <div className='flex flex-col w-full md:flex-row md: items-center justify-evenly'>
-                        <div class="flex flex-col bg-purple-900 p-2 m-2 ml-0 items-center rounded-xl w-full">
-                            <h1>Lavenders</h1>
-                            <div>Claire Anne - <span className="text-pink-500">Pink, </span></div>
-                            <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
-                            <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
-                            <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
-                            <div>
-                                <Age date={'2024-07-22'}/>
+
+                        <div className='flex flex-col w-full md:flex-row items-center justify-evenly'>
+                            <div
+                                className="flex flex-col bg-purple-900 p-2 m-2 items-center rounded-xl w-full min-w-[250px]">
+                                <h1>Lavenders</h1>
+                                <div>Claire Anne - <span className="text-pink-500">Pink, </span></div>
+                                <div>Annabelle Bronstein - <span className="text-purple-600">Purple, </span></div>
+                                <div>Bunny MacDougal - <span className="text-green-600">Green, </span></div>
+                                <div>and Magda - <span className="text-yellow-300">Yellow</span></div>
+                                <div>
+                                    <Age date={'2024-07-22'}/>
+                                </div>
+                            </div>
+                            <div
+                                className="flex flex-col bg-amber-600 p-2 m-2 items-center rounded-xl w-full min-w-[250px]">
+                                <h1>Buffs</h1>
+                                <div>Carrie - <span className="text-pink-500">Pink, </span></div>
+                                <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
+                                <div>Samantha - <span className="text-green-600">Green, </span></div>
+                                <div>Miranda - <span className="text-red-800">Red</span></div>
+                                <div>
+                                    <Age date={'2023-06-12'}/>
+                                </div>
                             </div>
                         </div>
-                        <div className='flex flex-col bg-amber-600 p-2 m-2 mr-0 items-center rounded-xl w-full'>
-                            <h1>Buffs</h1>
-                            <div>Carrie - <span className="text-pink-500">Pink, </span></div>
-                            <div>Charlotte - <span className="text-purple-600">Purple, </span></div>
-                            <div>Samantha - <span className="text-green-600">Green, </span></div>
-                            <div>Miranda - <span className="text-red-800">Red</span></div>
-                            <div>
-                                <Age date={'2023-06-12'}/>
-                            </div>
-                        </div>
+                        <Peckingorder/>
+                        <Brightness/>
+
                     </div>
-                    <Peckingorder/>
-                    <Brightness/>
-
                 </div>
-
-
-
 
 
             </div>
