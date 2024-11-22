@@ -45,8 +45,11 @@ const Weather = () => {
     }
 
     return (
-        <div className="m-3">
-            {renderWeather()}
+        <div className="items-center w-full">
+            <div className="m-2 bg-blue-900 rounded-xl p-2 ">
+                {renderWeather()}
+            </div>
+
         </div>
     );
 }

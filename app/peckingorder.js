@@ -1,6 +1,5 @@
 'use client'
 
-
 const PeckingOrder = () => {
 
     const theLadies = [
@@ -62,7 +61,7 @@ const PeckingOrder = () => {
         return ladiesSorted.map((chicken, index) => (
             <div
                 key={chicken.id || index}
-                className={`flex flex-row p-2 justify-around w-72 m-1 rounded-xl ${chicken.bgColor}`}
+                className={`flex flex-row p-2 justify-around w-72 mt-3 rounded-xl ${chicken.bgColor}`}
             >
                 <div className={chicken.bgColor}>
                     {chicken.rank === 1 ? <span className="mr-3">{crown}</span> : null}
@@ -73,12 +72,13 @@ const PeckingOrder = () => {
         ));
     }
 
-
     return (
-        <div className="relative flex flex-col justify-center items-center bg-blue-950 rounded-xl
-         p-5 m-2 overflow-hidden">
-            <h1>Pecking Order</h1>
-            {renderPeckingOrder()}
+        <div className="w-full">
+            <div className="flex flex-col justify-center bg-cyan-900 rounded-xl m-2 items-center p-3">
+                <h1>Pecking Order</h1>
+                {renderPeckingOrder()}
+
+            </div>
         </div>
     )
 }
