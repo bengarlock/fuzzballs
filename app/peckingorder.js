@@ -36,13 +36,13 @@ const PeckingOrder = () => {
         {
             id: 6,
             name: "Annabelle Bronstein",
-            rank: 7,
+            rank: 8,
             bgColor: "bg-purple-900"
         },
         {
             id: 7,
             name: "Bunny MacDougal",
-            rank: 8,
+            rank: 7,
             bgColor: "bg-purple-900"
         },
         {
