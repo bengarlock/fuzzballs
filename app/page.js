@@ -50,7 +50,6 @@ const LiveStream = () => {
                     />
                 </div>
 
-
                 <Weather/>
 
                 <div className="flex flex-col md:flex-row w-full justify-around">
