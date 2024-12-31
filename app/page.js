@@ -4,15 +4,19 @@ import Weather from "@/app/weather";
 import Age from "@/app/age";
 import {globalStore} from "@/app/globalstore";
 import Brightness from "@/app/brightness";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Peckingorder from "@/app/peckingorder";
+import Authorize from "@/app/Authorize";
 
 
 const LiveStream = () => {
 
     const {weather} = globalStore()
 
+    const [incognito, setIncognito] = useState(false)
+
     useEffect(() => {
+        getIncognitoStatus()
         const script = document.createElement('script');
         script.src = 'https://tag.demandbase.com/edfc31da3c22de40.min.js';
         script.async = true;
@@ -24,8 +28,35 @@ const LiveStream = () => {
         };
     }, []);
 
+    const getIncognitoStatus = async () => {
+        const token = await Authorize();
+
+        const requestOptions = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Token " + token
+            }
+        }
+
+        fetch("https://bengarlock.com/api/v1/competition/job_status/", requestOptions)
+            .then((response) => response.json())
+            .then((results) => {
+                const incognitoStatus = results.find(i => i.job_name === "fuzzballs_incognito")
+                if (incognitoStatus) {
+                    setIncognito(incognitoStatus.running)
+                }
+
+            })
+            .catch((error) => console.error(error));
+    }
+
 
     const renderURL = () => {
+        if (incognito) {
+            return `https://bengarlock.com/fuzzballs/incognito/index.m3u8?t=${new Date().getTime()}`
+        }
         const hlsUrl = weather.brightness < 15
             ? 'https://bengarlock.com/fuzzballs/roost/index.m3u8'
             : 'https://bengarlock.com/fuzzballs/run/index.m3u8'
