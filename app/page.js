@@ -30,13 +30,16 @@ const LiveStream = () => {
 
     const getIncognitoStatus = async () => {
         const token = await Authorize();
+        const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
 
         const requestOptions = {
             method: "GET",
+
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "Authorization": "Token " + token
+                "Authorization": "Token " + token,
+                "X-CSRFToken": csrfToken.split('=')[1]
             }
         }
 
@@ -55,6 +58,7 @@ const LiveStream = () => {
 
     const renderURL = () => {
         if (incognito) {
+            console.log("Incognito mode enabled.");
             return `https://bengarlock.com/fuzzballs/incognito/index.m3u8?t=${new Date().getTime()}`
         }
         const hlsUrl = weather.brightness < 15
