@@ -1,7 +1,5 @@
 'use client'
 
-import {globalStore} from "@/app/globalstore";
-
 const getIncognitoStatus = (setIncognitoJob, authToken) => {
 
 
