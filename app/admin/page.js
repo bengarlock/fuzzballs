@@ -83,6 +83,9 @@ const Admin = () => {
                     ></div>
                 </div>
             </label>
+            <div className='m-3'>
+                <a href='https://bengarlock.com/fuzzballs/'>Home</a>
+            </div>
         </div>
     )
 }
