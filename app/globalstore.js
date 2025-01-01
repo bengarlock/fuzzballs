@@ -5,6 +5,8 @@ import { create } from 'zustand';
 export const globalStore = create((set) => ({
     weather: {},
     setWeather: (weather) => set({ weather }),
-    incognito: false,
-    setIncognito: (incognito) => set({ incognito }),
+    incognitoJob: {},
+    setIncognitoJob: (incognitoJob) => set({ incognitoJob }),
+    authToken: '',
+    setAuthToken: (authToken) => set({ authToken }),
 }));

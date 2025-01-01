@@ -4,32 +4,35 @@ import Weather from "@/app/weather";
 import Age from "@/app/age";
 import {globalStore} from "@/app/globalstore";
 import Brightness from "@/app/brightness";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import Peckingorder from "@/app/peckingorder";
 import Image from 'next/image';
 import incognitoImage from '@/public/media/incognito.png'
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
+import Authorize from "@/app/admin/Authorize";
 
 const LiveStream = () => {
 
-    const {weather, incognito, setIncognito } = globalStore()
+    const {weather, incognitoJob, setIncognitoJob, authToken, setAuthToken} = globalStore()
 
     useEffect(() => {
-        getIncognitoStatus(setIncognito);
-
-        const script = document.createElement('script');
-        script.src = 'https://tag.demandbase.com/edfc31da3c22de40.min.js';
-        script.async = true;
-        script.id = 'demandbase_js_lib';
-        document.body.appendChild(script);
-
-        return () => {
-            document.body.removeChild(script);
+        const fetchAuthAndStatus = async () => {
+            if (!authToken) {
+                try {
+                    const token = await Authorize();
+                    setAuthToken(token);
+                    if (token) {
+                        await getIncognitoStatus(setIncognitoJob, token);
+                    }
+                } catch (error) {
+                    console.error("Error during authorization or fetching status:", error);
+                }
+            }
         };
 
+        fetchAuthAndStatus();
+    }, [authToken, setAuthToken, setIncognitoJob]);
 
-
-    }, []);
 
 
 
@@ -40,6 +43,8 @@ const LiveStream = () => {
         return `${hlsUrl}?t=${new Date().getTime()}`
     }
 
+    console.log(incognitoJob)
+
     return (
         <div className="flex flex-col items-center bg-gray-800 p-8 min-h-screen w-full">
             <div className="flex flex-col justify-evenly items-center text-center w-full md:w-1/2">
@@ -49,7 +54,7 @@ const LiveStream = () => {
                 </h1>
 
                 {
-                    incognito ? (
+                    incognitoJob.running ? (
                         <>
                             <p>The Chickie Cam will be back soon!</p>
                             <div className="m-2">
@@ -104,8 +109,8 @@ const LiveStream = () => {
                     </div>
                 </div>
 
-                <Peckingorder/>
-                <Brightness/>
+                <Peckingorder />
+                <Brightness />
             </div>
 
         </div>
