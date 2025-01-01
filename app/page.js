@@ -7,7 +7,8 @@ import Brightness from "@/app/brightness";
 import {useEffect, useState} from "react";
 import Peckingorder from "@/app/peckingorder";
 import Authorize from "@/app/Authorize";
-
+import Image from 'next/image';
+import incognitoImage from '@/public/media/incognito.png'
 
 const LiveStream = () => {
 
@@ -30,17 +31,19 @@ const LiveStream = () => {
 
     const getIncognitoStatus = async () => {
         const token = await Authorize();
+        const myHeaders = new Headers();
         const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+        if (csrfToken) {
+            myHeaders.append("X-CSRFToken", csrfToken.split('=')[1]);
+        }
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Token ${token}`);
 
         const requestOptions = {
             method: "GET",
-
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": "Token " + token,
-                "X-CSRFToken": csrfToken.split('=')[1]
-            }
+            headers: myHeaders,
+            redirect: "follow"
         }
 
         fetch("https://bengarlock.com/api/v1/competition/job_status/", requestOptions)
@@ -57,10 +60,6 @@ const LiveStream = () => {
 
 
     const renderURL = () => {
-        if (incognito) {
-            console.log("Incognito mode enabled.");
-            return `https://bengarlock.com/fuzzballs/incognito/index.m3u8?t=${new Date().getTime()}`
-        }
         const hlsUrl = weather.brightness < 15
             ? 'https://bengarlock.com/fuzzballs/roost/index.m3u8'
             : 'https://bengarlock.com/fuzzballs/run/index.m3u8'
@@ -74,16 +73,35 @@ const LiveStream = () => {
                     text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
                     Welcome to the Chickie Cam!
                 </h1>
-                <p>We are Lavender and Buff Orpington chickens</p>
 
-                <div className="m-2">
-                    <HLSPlayer src={renderURL()}
-                               autoPlay={true}
-                               controls={true}
-                               width="100%"
-                               height="auto"
-                    />
-                </div>
+                {
+                    incognito ? (
+                        <>
+                            <p>The Chickie Cam will be back soon!</p>
+                            <div className="m-2">
+                                <Image
+                                    src={incognitoImage}
+                                    alt="Incognito"
+                                    width={500}
+                                    height={500}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <p>We are Lavender and Buff Orpington chickens</p>
+                            <div className="m-2">
+                                <HLSPlayer
+                                    src={renderURL()}
+                                    autoPlay={true}
+                                    controls={true}
+                                    width="100%"
+                                    height="auto"
+                                />
+                            </div>
+                        </>
+                    )
+                }
 
                 <Weather/>
 
