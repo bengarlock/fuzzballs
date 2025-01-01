@@ -6,18 +6,17 @@ import {globalStore} from "@/app/globalstore";
 import Brightness from "@/app/brightness";
 import {useEffect, useState} from "react";
 import Peckingorder from "@/app/peckingorder";
-import Authorize from "@/app/Authorize";
 import Image from 'next/image';
 import incognitoImage from '@/public/media/incognito.png'
+import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 
 const LiveStream = () => {
 
-    const {weather} = globalStore()
-
-    const [incognito, setIncognito] = useState(false)
+    const {weather, incognito, setIncognito } = globalStore()
 
     useEffect(() => {
-        getIncognitoStatus()
+        getIncognitoStatus(setIncognito);
+
         const script = document.createElement('script');
         script.src = 'https://tag.demandbase.com/edfc31da3c22de40.min.js';
         script.async = true;
@@ -27,36 +26,11 @@ const LiveStream = () => {
         return () => {
             document.body.removeChild(script);
         };
+
+
+
     }, []);
 
-    const getIncognitoStatus = async () => {
-        const token = await Authorize();
-        const myHeaders = new Headers();
-        const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-        if (csrfToken) {
-            myHeaders.append("X-CSRFToken", csrfToken.split('=')[1]);
-        }
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Accept", "application/json");
-        myHeaders.append("Authorization", `Token ${token}`);
-
-        const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow"
-        }
-
-        fetch("https://bengarlock.com/api/v1/competition/job_status/", requestOptions)
-            .then((response) => response.json())
-            .then((results) => {
-                const incognitoStatus = results.find(i => i.job_name === "fuzzballs_incognito")
-                if (incognitoStatus) {
-                    setIncognito(incognitoStatus.running)
-                }
-
-            })
-            .catch((error) => console.error(error));
-    }
 
 
     const renderURL = () => {
