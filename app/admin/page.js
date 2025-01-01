@@ -49,7 +49,6 @@ const Admin = () => {
 
         let newIncognitoJob = {...incognitoJob}
         newIncognitoJob.running = !newIncognitoJob.running
-        console.log(newIncognitoJob)
 
         fetch("https://bengarlock.com/api/v1/competition/job_status/" + incognitoJob.id + "/", payload)
             .then(res => res.json())
@@ -57,20 +56,6 @@ const Admin = () => {
             .catch(err => console.log(err))
 
     };
-
-    const toggleSwitch = () => {
-        const switchInput = document.getElementById('switch');
-        const switchTrack = document.getElementById('switch-track');
-        const switchCircle = document.getElementById('switch-circle');
-
-        if (switchInput.checked) {
-            switchTrack.classList.replace('bg-gray-300', 'bg-green-500');
-            switchCircle.classList.replace('left-1', 'left-7');
-        } else {
-            switchTrack.classList.replace('bg-green-500', 'bg-gray-300');
-            switchCircle.classList.replace('left-7', 'left-1');
-        }
-    }
 
     return (
 
