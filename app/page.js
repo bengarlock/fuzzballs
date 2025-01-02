@@ -50,7 +50,7 @@ const LiveStream = () => {
                     Welcome to the Chickie Cam!
                 </h1>
 
-                {incognitoJob ? (
+                {incognitoJob.id ? (
                     incognitoJob.running ? (
                         <>
                             <p>The Chickie Cam will be back soon!</p>
