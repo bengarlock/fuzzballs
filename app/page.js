@@ -53,19 +53,18 @@ const LiveStream = () => {
                 {incognitoJob.id ? (
                     incognitoJob.running ? (
                         <>
-                            <p>The Chickie Cam will be back soon!</p>
-                            <div className="m-2 rounded-full overflow-hidden w-[400px] h-[400px]">
+
+                            <div className="mt-20 rounded-full overflow-hidden w-[300px] h-[300px]">
                                 <Image
                                     src={incognitoImage}
                                     alt="Incognito"
-                                    width={500}
-                                    height={500}
                                 />
                             </div>
+                            <p>The Chickie Cam will be back soon!</p>
                         </>
                     ) : (
                         <>
-                            <p>We are Lavender and Buff Orpington chickens</p>
+                        <p>We are Lavender and Buff Orpington chickens</p>
                             <div className="m-2">
                                 <HLSPlayer
                                     src={renderURL()}
