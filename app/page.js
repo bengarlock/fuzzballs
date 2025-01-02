@@ -121,7 +121,18 @@ const LiveStream = () => {
                         </>
                     )
                 ) : (
-                    <div>Loading...</div>
+                    <div>
+                        <div className="flex items-center justify-center">
+                            <Image
+                                className="rounded-full overflow-hidden w-[400px] h-[400px] animate-spin"
+                                src={incognitoImage}
+                                alt="Loading"
+                            />
+                        </div>
+                        <div>
+                            Loading...
+                        </div>
+                    </div>
                 )}
 
             </div>
