@@ -54,7 +54,7 @@ const LiveStream = () => {
                     incognitoJob.running ? (
                         <>
                             <p>The Chickie Cam will be back soon!</p>
-                            <div className="m-2">
+                            <div className="m-2 rounded-full overflow-hidden w-[400px] h-[400px]">
                                 <Image
                                     src={incognitoImage}
                                     alt="Incognito"
