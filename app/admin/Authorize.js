@@ -1,4 +1,5 @@
 import {passwords} from "@/passwords";
+import Cookies from "js-cookie";
 
 const Authorize = async () => {
 
@@ -7,6 +8,7 @@ const Authorize = async () => {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'X-CSRFToken': Cookies.get('csrftoken')
         },
         body: JSON.stringify({
             username: passwords.username,
