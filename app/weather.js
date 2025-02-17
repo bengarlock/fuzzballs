@@ -38,20 +38,39 @@ const Weather = () => {
     }
 
     const renderWeather = () => {
-        if (weather) {
-            const temp_f = (weather.air_temperature * 9 / 5) + 32
-            return "Current Weather: " + Math.ceil(temp_f) + "\u00B0" + " F"
+        if (!weather) return null;
+
+        const temp_f = (weather.air_temperature * 9 / 5) + 32;
+        const tempFeelsLike = (weather.feels_like * 9 / 5) + 32;
+
+        const windDirection = (() => {
+            if (weather.wind_direction <= 90) {
+                return "NE"
+            } else if (weather.wind_direction >= 91 && weather.wind_direction < 180) {
+                return "SE"
+            } else if (weather.wind_direction >= 181 && weather.wind_direction < 270) {
+                return "SW"
+            } else {
+                return "NW"
+            }
+        })()
+
+
+        return {
+            currentWeather: "Current Weather: " + Math.ceil(temp_f) + "\u00B0" + " F",
+            winds: "Winds: " + String(weather.wind_avg) + " MPH " + windDirection
         }
     }
 
     return (
         <div className="items-center w-full">
-            <div className="m-2 bg-blue-900 rounded-xl p-2 ">
-                {renderWeather()}
+            <div className="flex flex-row justify-evenly m-2 bg-blue-900 rounded-xl p-2 ">
+                <span>{renderWeather().currentWeather} </span>
+                <span>{renderWeather().winds} </span>
             </div>
 
         </div>
-    );
+    )
 }
 
 
