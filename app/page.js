@@ -45,12 +45,12 @@ const LiveStream = () => {
             <div className="flex flex-col justify-evenly items-center text-center w-full md:w-1/2">
                 <div className='flex flex-row'>
 
-                    <Image
-                        src="/fuzzballs/media/mardi-gras-buff.png"
-                        alt="Mardi Gras buff orpington chicken"
-                        width={100}
-                        height={50}
-                    />
+                    {/*<Image*/}
+                    {/*    src="/fuzzballs/media/mardi-gras-buff.png"*/}
+                    {/*    alt="Mardi Gras buff orpington chicken"*/}
+                    {/*    width={100}*/}
+                    {/*    height={50}*/}
+                    {/*/>*/}
 
                     <h1
                         className="mb-4 text-2xl font-extrabold leading-none tracking-tight
@@ -59,12 +59,12 @@ const LiveStream = () => {
                         Welcome to the Chickie Cam!
                     </h1>
 
-                    <Image
-                        src="/fuzzballs/media/mardi-gras-lav.png"
-                        alt="Mardi Gras lavender chicken"
-                        width={100}
-                        height={50}
-                    />
+                    {/*<Image*/}
+                    {/*    src="/fuzzballs/media/mardi-gras-lav.png"*/}
+                    {/*    alt="Mardi Gras lavender chicken"*/}
+                    {/*    width={100}*/}
+                    {/*    height={50}*/}
+                    {/*/>*/}
 
                 </div>
 
