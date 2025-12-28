@@ -41,7 +41,6 @@ const Weather = () => {
         if (!weather) return null;
 
         const temp_f = (weather.air_temperature * 9 / 5) + 32;
-        const tempFeelsLike = (weather.feels_like * 9 / 5) + 32;
 
         const windDirection = (() => {
             if (weather.wind_direction <= 90) {
@@ -57,18 +56,17 @@ const Weather = () => {
 
 
         return {
-            currentWeather: "Current Weather: " + Math.ceil(temp_f) + "\u00B0" + " F",
+            currentWeather: Math.ceil(temp_f) + "\u00B0" + " F",
             winds: "Winds: " + String(weather.wind_avg) + " MPH " + windDirection
         }
     }
 
     return (
         <div className="items-center w-full">
-            <div className="flex flex-row justify-evenly m-2 bg-blue-900 rounded-xl p-2 ">
+            <div className="flex flex-row justify-evenly rounded-xl ">
                 <span>{renderWeather().currentWeather} </span>
                 <span>{renderWeather().winds} </span>
             </div>
-
         </div>
     )
 }
