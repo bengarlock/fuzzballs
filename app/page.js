@@ -47,10 +47,11 @@ export default function LiveStream() {
         <div className="relative min-h-screen overflow-hidden">
             {/* Background */}
             <div
-                className="absolute inset-0 bg-cover bg-center scale-110 blur-md"
+                className="absolute inset-0 bg-cover bg-center scale-110"
                 style={{
                     backgroundImage:
                         "url('/fuzzballs/media/photos/headerbar.jpeg')",
+                    position: "fixed"
                 }}
             />
             <div
