@@ -43,6 +43,10 @@ export default function LiveStream() {
                 : "https://bengarlock.com/fuzzballs/roost/index.m3u8"
         }?t=${Date.now()}`;
 
+    const airTempC = Number(weather?.air_temperature);
+    const tempF = Number.isFinite(airTempC) ? (airTempC * 9 / 5) + 32 : null;
+    const showSnow = tempF !== null && Math.ceil(tempF) <= 32;
+
     return (
         <div className="relative min-h-screen overflow-hidden">
             {/* Background */}
@@ -59,6 +63,13 @@ export default function LiveStream() {
                     isDay ? "bg-black/30" : "bg-black/60"
                 }`}
             />
+            {showSnow && (
+                <div className="snow" aria-hidden="true">
+                    {Array.from({length: 42}).map((_, index) => (
+                        <span key={index}/>
+                    ))}
+                </div>
+            )}
 
             {/* Content */}
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 text-white">
