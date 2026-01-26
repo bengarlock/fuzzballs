@@ -95,10 +95,12 @@ const HLSPlayer = ({
             />
 
             {status !== 'playing' && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/60 text-white rounded-xl">
-                    {status === 'loading' && 'Loading live stream…'}
-                    {status === 'stalled' && 'Reconnecting…'}
-                    {status === 'offline' && 'Stream offline — retrying'}
+                <div className="absolute bottom-3 left-3 right-3 flex justify-center pointer-events-none">
+                    <span className="text-xs sm:text-sm text-white/90 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full">
+                        {status === 'loading' && 'Loading live stream…'}
+                        {status === 'stalled' && 'Reconnecting…'}
+                        {status === 'offline' && 'Stream offline — retrying'}
+                    </span>
                 </div>
             )}
         </div>
