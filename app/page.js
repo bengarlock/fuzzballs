@@ -65,7 +65,7 @@ export default function LiveStream() {
             />
             {showSnow && (
                 <div className="snow" aria-hidden="true">
-                    {Array.from({length: 32}).map((_, index) => (
+                    {Array.from({length: 42}).map((_, index) => (
                         <span key={index}/>
                     ))}
                 </div>
