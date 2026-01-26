@@ -12,7 +12,7 @@ import incognitoImage from "@/public/media/incognito.png";
 import {globalStore} from "@/app/globalstore";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 import Authorize from "@/app/admin/Authorize";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 
 export default function LiveStream() {
     const {
@@ -46,6 +46,24 @@ export default function LiveStream() {
     const airTempC = Number(weather?.air_temperature);
     const tempF = Number.isFinite(airTempC) ? (airTempC * 9 / 5) + 32 : null;
     const showSnow = tempF !== null && Math.ceil(tempF) <= 32;
+    const snowflakes = useMemo(() => (
+        Array.from({length: 42}, () => {
+            const left = Math.random() * 100;
+            const size = 2 + Math.random() * 4;
+            const opacity = 0.35 + Math.random() * 0.6;
+            const duration = 9 + Math.random() * 9;
+            const delay = -Math.random() * 20;
+            const drift = (Math.random() * 60) - 30;
+            return {
+                "--left": `${left}%`,
+                "--size": `${size}px`,
+                "--opacity": opacity.toFixed(2),
+                "--duration": `${duration.toFixed(1)}s`,
+                "--delay": `${delay.toFixed(1)}s`,
+                "--drift": `${drift.toFixed(0)}px`
+            };
+        })
+    ), []);
 
     return (
         <div className="relative min-h-screen overflow-hidden">
@@ -65,8 +83,8 @@ export default function LiveStream() {
             />
             {showSnow && (
                 <div className="snow" aria-hidden="true">
-                    {Array.from({length: 42}).map((_, index) => (
-                        <span key={index}/>
+                    {snowflakes.map((flake, index) => (
+                        <span key={index} style={flake}/>
                     ))}
                 </div>
             )}
