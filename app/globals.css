@@ -32,6 +32,7 @@ body {
   pointer-events: none;
   overflow: hidden;
   z-index: 5;
+  contain: layout style paint;
 }
 
 .snow span {
@@ -43,53 +44,11 @@ body {
   opacity: var(--opacity);
   background: rgba(255, 255, 255, 0.95);
   border-radius: 50%;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
   animation: snow-fall var(--duration) linear infinite;
   animation-delay: var(--delay);
+  will-change: transform;
 }
-
-.snow span:nth-child(1) { --left: 4%; --size: 3px; --opacity: 0.5; --duration: 12s; --delay: -3s; --drift: -20px; }
-.snow span:nth-child(2) { --left: 10%; --size: 5px; --opacity: 0.7; --duration: 14s; --delay: -6s; --drift: 30px; }
-.snow span:nth-child(3) { --left: 16%; --size: 4px; --opacity: 0.6; --duration: 11s; --delay: -1s; --drift: -10px; }
-.snow span:nth-child(4) { --left: 22%; --size: 6px; --opacity: 0.9; --duration: 13s; --delay: -8s; --drift: 25px; }
-.snow span:nth-child(5) { --left: 28%; --size: 3px; --opacity: 0.4; --duration: 10s; --delay: -4s; --drift: -15px; }
-.snow span:nth-child(6) { --left: 34%; --size: 5px; --opacity: 0.8; --duration: 15s; --delay: -7s; --drift: 20px; }
-.snow span:nth-child(7) { --left: 40%; --size: 4px; --opacity: 0.5; --duration: 12s; --delay: -2s; --drift: -30px; }
-.snow span:nth-child(8) { --left: 46%; --size: 6px; --opacity: 0.85; --duration: 14s; --delay: -9s; --drift: 15px; }
-.snow span:nth-child(9) { --left: 52%; --size: 3px; --opacity: 0.45; --duration: 11s; --delay: -5s; --drift: -18px; }
-.snow span:nth-child(10) { --left: 58%; --size: 5px; --opacity: 0.75; --duration: 13s; --delay: -6s; --drift: 22px; }
-.snow span:nth-child(11) { --left: 64%; --size: 4px; --opacity: 0.6; --duration: 12s; --delay: -3s; --drift: -12px; }
-.snow span:nth-child(12) { --left: 70%; --size: 6px; --opacity: 0.9; --duration: 16s; --delay: -10s; --drift: 28px; }
-.snow span:nth-child(13) { --left: 76%; --size: 3px; --opacity: 0.5; --duration: 10s; --delay: -1s; --drift: -24px; }
-.snow span:nth-child(14) { --left: 82%; --size: 5px; --opacity: 0.8; --duration: 15s; --delay: -8s; --drift: 12px; }
-.snow span:nth-child(15) { --left: 88%; --size: 4px; --opacity: 0.55; --duration: 12s; --delay: -6s; --drift: -14px; }
-.snow span:nth-child(16) { --left: 94%; --size: 6px; --opacity: 0.95; --duration: 14s; --delay: -11s; --drift: 26px; }
-.snow span:nth-child(17) { --left: 7%; --size: 4px; --opacity: 0.6; --duration: 13s; --delay: -7s; --drift: 18px; }
-.snow span:nth-child(18) { --left: 19%; --size: 5px; --opacity: 0.7; --duration: 12s; --delay: -2s; --drift: -20px; }
-.snow span:nth-child(19) { --left: 31%; --size: 3px; --opacity: 0.4; --duration: 11s; --delay: -4s; --drift: 16px; }
-.snow span:nth-child(20) { --left: 43%; --size: 6px; --opacity: 0.85; --duration: 17s; --delay: -12s; --drift: -26px; }
-.snow span:nth-child(21) { --left: 55%; --size: 4px; --opacity: 0.6; --duration: 12s; --delay: -5s; --drift: 24px; }
-.snow span:nth-child(22) { --left: 67%; --size: 5px; --opacity: 0.75; --duration: 14s; --delay: -9s; --drift: -16px; }
-.snow span:nth-child(23) { --left: 79%; --size: 3px; --opacity: 0.45; --duration: 10s; --delay: -3s; --drift: 12px; }
-.snow span:nth-child(24) { --left: 91%; --size: 6px; --opacity: 0.9; --duration: 15s; --delay: -8s; --drift: -22px; }
-.snow span:nth-child(25) { --left: 2%; --size: 4px; --opacity: 0.55; --duration: 12s; --delay: -5s; --drift: 10px; }
-.snow span:nth-child(26) { --left: 13%; --size: 6px; --opacity: 0.85; --duration: 16s; --delay: -11s; --drift: -28px; }
-.snow span:nth-child(27) { --left: 25%; --size: 3px; --opacity: 0.45; --duration: 10s; --delay: -2s; --drift: 18px; }
-.snow span:nth-child(28) { --left: 37%; --size: 5px; --opacity: 0.7; --duration: 13s; --delay: -7s; --drift: -12px; }
-.snow span:nth-child(29) { --left: 49%; --size: 4px; --opacity: 0.6; --duration: 12s; --delay: -4s; --drift: 26px; }
-.snow span:nth-child(30) { --left: 61%; --size: 6px; --opacity: 0.9; --duration: 15s; --delay: -9s; --drift: -20px; }
-.snow span:nth-child(31) { --left: 73%; --size: 3px; --opacity: 0.5; --duration: 11s; --delay: -3s; --drift: 14px; }
-.snow span:nth-child(32) { --left: 85%; --size: 5px; --opacity: 0.75; --duration: 14s; --delay: -8s; --drift: -24px; }
-.snow span:nth-child(33) { --left: 5%; --size: 4px; --opacity: 0.6; --duration: 13s; --delay: -6s; --drift: 16px; }
-.snow span:nth-child(34) { --left: 17%; --size: 6px; --opacity: 0.9; --duration: 15s; --delay: -10s; --drift: -26px; }
-.snow span:nth-child(35) { --left: 29%; --size: 3px; --opacity: 0.5; --duration: 11s; --delay: -3s; --drift: 20px; }
-.snow span:nth-child(36) { --left: 41%; --size: 5px; --opacity: 0.7; --duration: 12s; --delay: -7s; --drift: -18px; }
-.snow span:nth-child(37) { --left: 53%; --size: 4px; --opacity: 0.65; --duration: 13s; --delay: -5s; --drift: 24px; }
-.snow span:nth-child(38) { --left: 65%; --size: 6px; --opacity: 0.85; --duration: 16s; --delay: -11s; --drift: -22px; }
-.snow span:nth-child(39) { --left: 77%; --size: 3px; --opacity: 0.55; --duration: 10s; --delay: -2s; --drift: 14px; }
-.snow span:nth-child(40) { --left: 89%; --size: 5px; --opacity: 0.8; --duration: 14s; --delay: -8s; --drift: -28px; }
-.snow span:nth-child(41) { --left: 11%; --size: 4px; --opacity: 0.6; --duration: 12s; --delay: -4s; --drift: 12px; }
-.snow span:nth-child(42) { --left: 93%; --size: 6px; --opacity: 0.9; --duration: 15s; --delay: -9s; --drift: -20px; }
 
 @keyframes snow-fall {
   0% {
@@ -97,6 +56,12 @@ body {
   }
   100% {
     transform: translate3d(var(--drift), 110vh, 0) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snow span {
+    animation: none;
   }
 }
 

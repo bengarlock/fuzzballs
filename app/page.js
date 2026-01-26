@@ -46,8 +46,9 @@ export default function LiveStream() {
     const airTempC = Number(weather?.air_temperature);
     const tempF = Number.isFinite(airTempC) ? (airTempC * 9 / 5) + 32 : null;
     const showSnow = tempF !== null && Math.ceil(tempF) <= 32;
+    const snowflakeCount = 28;
     const snowflakes = useMemo(() => (
-        Array.from({length: 42}, () => {
+        Array.from({length: snowflakeCount}, () => {
             const left = Math.random() * 100;
             const size = 2 + Math.random() * 4;
             const opacity = 0.35 + Math.random() * 0.6;
