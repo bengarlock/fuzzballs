@@ -40,12 +40,24 @@ const LiveStream = () => {
         return `${hlsUrl}?t=${new Date().getTime()}`;
     };
 
+    const tempF = typeof weather?.air_temperature === 'number'
+        ? (weather.air_temperature * 9 / 5) + 32
+        : null;
+    const showSnow = tempF !== null && Math.ceil(tempF) <= 32;
+
     return (
         <div className="relative flex flex-col items-center p-8 min-h-screen w-full">
             <div
-                className="fixed top-0 left-0 w-full h-full bg-cover bg-center opacity-50"
+                className="fixed top-0 left-0 w-full h-full bg-cover bg-center opacity-50 z-0"
                 style={{backgroundImage: "url('/fuzzballs/media/photos/headerbar.jpeg')"}}
             />
+            {showSnow && (
+                <div className="snow" aria-hidden="true">
+                    {Array.from({length: 32}).map((_, index) => (
+                        <span key={index}/>
+                    ))}
+                </div>
+            )}
             <div className="relative z-10 flex flex-col justify-evenly items-center text-center w-full md:w-1/2">
                 <div className="flex flex-row">
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-400 md:text-2xl lg:text-4xl dark:text-white">
