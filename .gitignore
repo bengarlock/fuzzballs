@@ -36,7 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 .idea
-stream/roost
-stream/run
+/stream/
 passwords.js
 
