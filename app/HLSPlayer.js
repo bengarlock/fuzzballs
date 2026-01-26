@@ -13,9 +13,11 @@ const HLSPlayer = ({
     const videoRef = useRef(null);
     const hlsRef = useRef(null);
     const retryTimeout = useRef(null);
+    const badgeDelayTimeout = useRef(null);
 
     const [status, setStatus] = useState('loading');
     // loading | playing | stalled | offline
+    const [showStatusBadge, setShowStatusBadge] = useState(false);
 
     const startPlayback = async () => {
         const video = videoRef.current;
@@ -63,6 +65,22 @@ const HLSPlayer = ({
     };
 
     useEffect(() => {
+        // Hide immediately when playing; delay showing for transient hiccups.
+        if (status === 'playing') {
+            setShowStatusBadge(false);
+            clearTimeout(badgeDelayTimeout.current);
+            return;
+        }
+
+        clearTimeout(badgeDelayTimeout.current);
+        badgeDelayTimeout.current = setTimeout(() => {
+            setShowStatusBadge(true);
+        }, 900);
+
+        return () => clearTimeout(badgeDelayTimeout.current);
+    }, [status]);
+
+    useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
 
@@ -94,16 +112,16 @@ const HLSPlayer = ({
                 className="rounded-xl bg-black"
             />
 
-            {status !== 'playing' && (
-                <div className="absolute bottom-3 left-3 right-3 flex justify-center pointer-events-none">
-                    <span className="text-xs sm:text-sm text-white/90 bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full">
-                        {status === 'loading' && 'Loading live stream…'}
+            {status !== 'playing' && showStatusBadge && (
+                <div className="absolute bottom-2 right-2 flex justify-end pointer-events-none">
+                    <span className="text-[10px] sm:text-xs text-white/70 bg-black/25 backdrop-blur-sm px-2 py-0.5 rounded-full opacity-80">
+                        {status === 'loading' && 'Loading…'}
                         {status === 'stalled' && 'Reconnecting…'}
-                        {status === 'offline' && 'Stream offline — retrying'}
+                        {status === 'offline' && 'Offline — retrying'}
                     </span>
                 </div>
             )}
-        </div>
+        </div >
     );
 };
 
