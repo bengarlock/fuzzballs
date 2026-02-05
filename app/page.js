@@ -24,7 +24,9 @@ export default function LiveStream() {
     } = globalStore();
 
     const isDay = weather.brightness >= 11;
-    const isWinter = weather.air_temperature <= 10
+
+    const hasTemp = Number.isFinite(Number(weather?.air_temperature));
+    const isWinter = hasTemp && Number(weather.air_temperature) <= 10;
 
 
     useEffect(() => {
@@ -71,15 +73,17 @@ export default function LiveStream() {
     return (
         <div className="relative min-h-screen overflow-hidden">
             {/* Background */}
-            <div
-                className="absolute inset-0 bg-cover bg-center scale-110"
-                style={{
-                    backgroundImage: isWinter
-                        ? "url('/fuzzballs/media/photos/background-winter.jpeg')"
-                        : "url('/fuzzballs/media/photos/headerbar.jpeg')",
-                    position: "fixed",
-                }}
-            />
+            {hasTemp && (
+                <div
+                    className="absolute inset-0 bg-cover bg-center scale-110"
+                    style={{
+                        backgroundImage: isWinter
+                            ? "url('/fuzzballs/media/photos/background-winter.jpeg')"
+                            : "url('/fuzzballs/media/photos/headerbar.jpeg')",
+                        position: "fixed",
+                    }}
+                />
+            )}
             <div
                 className={`absolute inset-0 ${
                     isDay ? "bg-black/30" : "bg-black/60"
