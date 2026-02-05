@@ -150,7 +150,7 @@ export default function LiveStream() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                                     <ChickenCard
                                         title="Lavenders"
-                                        bg="bg-purple-900/70"
+                                        bg="bg-gradient-to-br from-purple-400/20 via-purple-900/40 to-fuchsia-900/50"
                                         birthDate="2024-07-22"
                                         chickens={[
                                             {name: "Claire Anne", color: "Pink", ringColor: "text-pink-400"},
@@ -166,7 +166,7 @@ export default function LiveStream() {
 
                                     <ChickenCard
                                         title="Buffs"
-                                        bg="bg-amber-600/80"
+                                        bg="bg-gradient-to-br from-amber-300/20 via-amber-700/40 to-amber-900/50"
                                         birthDate="2023-06-12"
                                         chickens={[
                                             {name: "Carrie", color: "Pink", ringColor: "text-pink-400"},
