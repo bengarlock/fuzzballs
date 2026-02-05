@@ -24,6 +24,8 @@ export default function LiveStream() {
     } = globalStore();
 
     const isDay = weather.brightness >= 11;
+    const isWinter = weather.air_temperature <= 10
+
 
     useEffect(() => {
         const run = async () => {
@@ -72,9 +74,10 @@ export default function LiveStream() {
             <div
                 className="absolute inset-0 bg-cover bg-center scale-110"
                 style={{
-                    backgroundImage:
-                        "url('/fuzzballs/media/photos/headerbar.jpeg')",
-                    position: "fixed"
+                    backgroundImage: isWinter
+                        ? "url('/fuzzballs/media/photos/background-winter.jpeg')"
+                        : "url('/fuzzballs/media/photos/headerbar.jpeg')",
+                    position: "fixed",
                 }}
             />
             <div
