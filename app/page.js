@@ -26,7 +26,7 @@ export default function LiveStream() {
     const isDay = weather.brightness >= 11;
 
     const hasTemp = Number.isFinite(Number(weather?.air_temperature));
-    const isWinter = hasTemp && Number(weather.air_temperature) <= 10;
+    const isWinter = hasTemp && Number(weather.air_temperature) <= 0;
 
 
     useEffect(() => {
