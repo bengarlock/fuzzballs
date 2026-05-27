@@ -7,6 +7,7 @@ import Brightness from "@/app/brightness";
 import PeckingOrder from "@/app/PeckingOrder";
 import StatusPill from "./StatusPill";
 import ChickenCard from "./ChickenCard";
+import LastChickenDetected from "./LastChickenDetected";
 import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
 import {globalStore} from "@/app/globalstore";
@@ -133,15 +134,17 @@ export default function LiveStream() {
                                     initial={{opacity: 0}}
                                     animate={{opacity: 1}}
                                     transition={{delay: 0.3}}
-                                    className="rounded-3xl overflow-hidden shadow-xl mb-6"
+                                    className="mb-6"
                                 >
-                                    <HLSPlayer
-                                        src={streamUrl()}
-                                        autoPlay
-                                        muted
-                                        controls
-                                        width="100%"
-                                    />
+                                    <LastChickenDetected authToken={authToken}>
+                                        <HLSPlayer
+                                            src={streamUrl()}
+                                            autoPlay
+                                            muted
+                                            controls
+                                            width="100%"
+                                        />
+                                    </LastChickenDetected>
                                 </motion.div>
 
                                 <Weather/>

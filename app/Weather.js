@@ -1,24 +1,26 @@
 'use client'
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {globalStore} from "@/app/globalstore";
 
+const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
+const WEATHER_API = `${APP_BASE_PATH}/api/weather`;
 
 const Weather = () => {
 
-    const {weather, setWeather} = globalStore()
+    const {weather, setWeather, authToken} = globalStore()
+    const [error, setError] = useState('');
 
     useEffect(() => {
+        if (!authToken) return;
         fetchWeather();
-    }, []);
+    }, [authToken]);
 
 
     const fetchWeather = () => {
         const myHeaders = new Headers();
-        const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-        if (csrfToken) {
-            myHeaders.append("X-CSRFToken", csrfToken.split('=')[1]);
-        }
+        myHeaders.append("Accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", authToken);
 
         const raw = JSON.stringify({
             "request": "get_weather_data"
@@ -31,14 +33,29 @@ const Weather = () => {
             redirect: "follow"
         };
 
-        fetch("https://bengarlock.com/api/v1/garden/weather/", requestOptions)
-            .then((response) => response.json())
-            .then((weather) => setWeather(weather.obs[0]))
-            .catch((error) => console.error(error));
+        fetch(WEATHER_API, requestOptions)
+            .then(async (response) => {
+                const weather = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(weather.message || weather.detail || `HTTP ${response.status}`);
+                }
+                if (!weather?.obs?.[0]) {
+                    throw new Error('Weather response did not include an observation.');
+                }
+                return weather;
+            })
+            .then((weather) => {
+                setError('');
+                setWeather(weather.obs[0]);
+            })
+            .catch((error) => {
+                setError(error.message ?? String(error));
+                console.error(error);
+            });
     }
 
     const renderWeather = () => {
-        if (!weather) return null;
+        if (!weather?.air_temperature) return null;
 
         const temp_f = (weather.air_temperature * 9 / 5) + 32;
 
@@ -61,11 +78,21 @@ const Weather = () => {
         }
     }
 
+    const currentWeather = renderWeather();
+
     return (
         <div className="items-center w-full">
             <div className="flex flex-row justify-evenly rounded-xl ">
-                <span>{renderWeather().currentWeather} </span>
-                <span>{renderWeather().winds} </span>
+                {currentWeather ? (
+                    <>
+                        <span>{currentWeather.currentWeather} </span>
+                        <span>{currentWeather.winds} </span>
+                    </>
+                ) : (
+                    <span className="text-sm text-white/60">
+                        {error ? 'Weather unavailable' : 'Loading weather...'}
+                    </span>
+                )}
             </div>
         </div>
     )
