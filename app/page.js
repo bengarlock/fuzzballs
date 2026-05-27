@@ -7,6 +7,7 @@ import Brightness from "@/app/brightness";
 import PeckingOrder from "@/app/PeckingOrder";
 import StatusPill from "./StatusPill";
 import ChickenCard from "./ChickenCard";
+import LastChickenDetected from "./LastChickenDetected";
 import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
 import {globalStore} from "@/app/globalstore";
@@ -143,6 +144,8 @@ export default function LiveStream() {
                                         width="100%"
                                     />
                                 </motion.div>
+
+                                <LastChickenDetected authToken={authToken}/>
 
                                 <Weather/>
 
