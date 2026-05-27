@@ -6,13 +6,16 @@ const CLIP_API_URL =
     process.env.FUZZBALLS_NVR_CLIPS_API_URL ||
     process.env.GARDEN_NVR_CLIPS_API_URL ||
     'https://bengarlock.com/api/v1/garden/nvr-clips/';
-const CAMERA_ID =
+const CLIP_CAMERA_ID =
     process.env.FUZZBALLS_UNIFI_CAMERA_ID ||
     process.env.UNIFI_PROTECT_CAMERA_ID ||
     process.env.NEXT_PUBLIC_FUZZBALLS_CAMERA_ID ||
     '';
+const EVENT_CAMERA_ID = process.env.FUZZBALLS_UNIFI_EVENT_CAMERA_ID || CLIP_CAMERA_ID;
 const MOTION_EVENT_TYPE = process.env.FUZZBALLS_UNIFI_MOTION_EVENT_TYPE || 'motion';
 const CLIP_LIVE_GUARD_MS = 15 * 1000;
+const CLIP_CONTEXT_SECONDS = 2;
+const MAX_CATCH_UP_SECONDS = 10 * 60;
 
 function authHeaders(request, extra = {}) {
     const authorization = request.headers.get('authorization');
@@ -40,7 +43,7 @@ function eventTime(event) {
 
 function latestMotionEvent(events) {
     const expectedType = MOTION_EVENT_TYPE.trim().toLowerCase();
-    const expectedCamera = CAMERA_ID.trim();
+    const expectedCamera = EVENT_CAMERA_ID.trim();
 
     return events
         .filter((event) => {
@@ -57,10 +60,24 @@ function safeClipInstant(event) {
     return new Date(Math.min(eventMs, latestSafeMs)).toISOString();
 }
 
+function catchUpSecondsAfter(event) {
+    const eventMs = eventTime(event);
+    const latestSafeMs = Date.now() - CLIP_LIVE_GUARD_MS;
+    if (!eventMs || eventMs >= latestSafeMs) return 15;
+
+    return Math.max(15, Math.min(MAX_CATCH_UP_SECONDS, Math.ceil((latestSafeMs - eventMs) / 1000)));
+}
+
 export async function POST(request) {
-    if (!CAMERA_ID.trim()) {
+    if (!CLIP_CAMERA_ID.trim()) {
         return NextResponse.json(
             {message: 'FUZZBALLS_UNIFI_CAMERA_ID or UNIFI_PROTECT_CAMERA_ID must be set.'},
+            {status: 500},
+        );
+    }
+    if (!EVENT_CAMERA_ID.trim()) {
+        return NextResponse.json(
+            {message: 'FUZZBALLS_UNIFI_EVENT_CAMERA_ID must be set.'},
             {status: 500},
         );
     }
@@ -85,12 +102,15 @@ export async function POST(request) {
     }
 
     const requestedAt = safeClipInstant(event);
+    const secondsAfter = catchUpSecondsAfter(event);
     const clipResponse = await fetch(CLIP_API_URL, {
         method: 'POST',
         headers: authHeaders(request, {'Content-Type': 'application/json'}),
         body: JSON.stringify({
             at: requestedAt,
-            camera_id: CAMERA_ID.trim(),
+            camera_id: CLIP_CAMERA_ID.trim(),
+            seconds_before: CLIP_CONTEXT_SECONDS,
+            seconds_after: secondsAfter,
         }),
         cache: 'no-store',
     });
@@ -108,8 +128,14 @@ export async function POST(request) {
                 event_id: event.event_id,
                 event_type: event.event_type,
                 camera_id: event.camera_id,
+                clip_camera_id: CLIP_CAMERA_ID.trim(),
                 created_at: event.created_at,
                 event_link: event.event_link,
+            },
+            catch_up: {
+                seconds_before: CLIP_CONTEXT_SECONDS,
+                seconds_after: secondsAfter,
+                returns_to_live_on_end: true,
             },
         },
         {status: clipResponse.status},
