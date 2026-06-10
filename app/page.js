@@ -14,6 +14,7 @@ import {globalStore} from "@/app/globalstore";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 import Authorize from "@/app/admin/Authorize";
 import {useEffect, useMemo} from "react";
+import ChickenPeek from "@/app/ChickenPeek";
 
 export default function LiveStream() {
     const {
@@ -97,6 +98,7 @@ export default function LiveStream() {
                     ))}
                 </div>
             )}
+            <ChickenPeek/>
 
             {/* Content */}
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 text-white">
