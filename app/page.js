@@ -15,6 +15,7 @@ import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 import Authorize from "@/app/admin/Authorize";
 import {useEffect, useMemo} from "react";
 import ChickenPeek from "@/app/ChickenPeek";
+import Link from "next/link";
 
 export default function LiveStream() {
     const {
@@ -114,6 +115,13 @@ export default function LiveStream() {
                             Chickie Cam
                         </h1>
                         <StatusPill active={isDay}/>
+                        <Link
+                            href="/gallery"
+                            className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 transition hover:-translate-y-0.5 hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-white/70"
+                        >
+                            <span aria-hidden="true">✦</span>
+                            Visit the flock gallery
+                        </Link>
                     </div>
 
                     {/* Stream */}
