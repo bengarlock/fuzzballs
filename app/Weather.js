@@ -7,20 +7,18 @@ const WEATHER_API = `${APP_BASE_PATH}/api/weather`;
 
 const Weather = () => {
 
-    const {weather, setWeather, authToken} = globalStore()
+    const {weather, setWeather} = globalStore()
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (!authToken) return;
         fetchWeather();
-    }, [authToken]);
+    }, []);
 
 
     const fetchWeather = () => {
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", authToken);
 
         const raw = JSON.stringify({
             "request": "get_weather_data"

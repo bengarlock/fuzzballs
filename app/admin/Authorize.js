@@ -1,33 +1,19 @@
-import {passwords} from "@/passwords";
-import Cookies from "js-cookie";
+const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
 
 const Authorize = async () => {
-
-    const payload = {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': Cookies.get('csrftoken')
-        },
-        body: JSON.stringify({
-            username: passwords.username,
-            password: passwords.password,
-        }),
-    };
-
     try {
-        const response = await fetch("https://bengarlock.com/api/v1/login/", payload);
-        const tokenData = await response.json();
+        const response = await fetch(`${APP_BASE_PATH}/api/authorize`, {
+            method: "POST",
+            headers: {Accept: 'application/json'},
+        });
+        const data = await response.json().catch(() => ({}));
 
-        if (tokenData.token) {
-            return `Token ${tokenData.token}`
-        } else {
-            throw new Error("Authorization failed: No token received");
+        if (!response.ok || !data.authorized) {
+            throw new Error(data.message || "Authorization failed");
         }
+        return true;
     } catch (err) {
         console.error("Authorization error:", err);
-        setError(err.message);
         return false;
     }
 };
