@@ -12,7 +12,6 @@ import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
 import {globalStore} from "@/app/globalstore";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
-import Authorize from "@/app/admin/Authorize";
 import {useEffect, useMemo} from "react";
 import ChickenPeek from "@/app/ChickenPeek";
 import Link from "next/link";
@@ -22,8 +21,6 @@ export default function LiveStream() {
         weather,
         incognitoJob,
         setIncognitoJob,
-        authToken,
-        setAuthToken
     } = globalStore();
 
     const isDay = weather.brightness >= 11;
@@ -33,15 +30,8 @@ export default function LiveStream() {
 
 
     useEffect(() => {
-        const run = async () => {
-            if (!authToken) {
-                const token = await Authorize();
-                setAuthToken(token);
-                if (token) await getIncognitoStatus(setIncognitoJob, token);
-            }
-        };
-        run();
-    }, [authToken, setAuthToken, setIncognitoJob]);
+        getIncognitoStatus(setIncognitoJob);
+    }, [setIncognitoJob]);
 
     const streamUrl = () =>
         `${
@@ -146,7 +136,7 @@ export default function LiveStream() {
                                     transition={{delay: 0.3}}
                                     className="mb-6"
                                 >
-                                    <LastChickenDetected authToken={authToken}>
+                                    <LastChickenDetected>
                                         <HLSPlayer
                                             src={streamUrl()}
                                             autoPlay

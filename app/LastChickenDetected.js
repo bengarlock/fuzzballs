@@ -19,21 +19,16 @@ function formatEventTime(value) {
     }).format(date);
 }
 
-export default function LastChickenDetected({authToken, children}) {
+export default function LastChickenDetected({children}) {
     const [clipPanel, setClipPanel] = useState(null);
     const requestRef = useRef(null);
     const filenameRef = useRef(null);
-    const authTokenRef = useRef(authToken);
     const videoRef = useRef(null);
 
     const eventLabel = useMemo(
         () => formatEventTime(clipPanel?.event?.created_at || clipPanel?.requestedAt),
         [clipPanel?.event?.created_at, clipPanel?.requestedAt],
     );
-
-    useEffect(() => {
-        authTokenRef.current = authToken;
-    }, [authToken]);
 
     const requestClipDelete = (filename) => {
         if (!filename) return;
@@ -43,7 +38,6 @@ export default function LastChickenDetected({authToken, children}) {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                ...(authTokenRef.current ? {Authorization: authTokenRef.current} : {}),
             },
             body: JSON.stringify({filename}),
         }).catch(() => {
@@ -85,7 +79,6 @@ export default function LastChickenDetected({authToken, children}) {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                ...(authToken ? {Authorization: authToken} : {}),
             },
             signal: controller.signal,
         })

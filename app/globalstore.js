@@ -7,6 +7,4 @@ export const globalStore = create((set) => ({
     setWeather: (weather) => set({ weather }),
     incognitoJob: {running: false},
     setIncognitoJob: (incognitoJob) => set({ incognitoJob }),
-    authToken: '',
-    setAuthToken: (authToken) => set({ authToken }),
 }));

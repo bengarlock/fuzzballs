@@ -2,45 +2,25 @@
 import {globalStore} from "@/app/globalstore";
 import {useEffect} from "react";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
-import Authorize from "@/app/admin/Authorize";
 import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
 
+const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
+
 const Admin = () => {
 
-    const {incognitoJob, setIncognitoJob, authToken, setAuthToken} = globalStore()
+    const {incognitoJob, setIncognitoJob} = globalStore()
 
     useEffect(() => {
-        const fetchAuthAndStatus = async () => {
-            if (!authToken) {
-                try {
-                    const token = await Authorize();
-                    setAuthToken(token);
-                    if (token) {
-                        await getIncognitoStatus(setIncognitoJob, token);
-                    }
-                } catch (error) {
-                    console.error("Error during authorization or fetching status:", error);
-                }
-            }
-        };
-
-        fetchAuthAndStatus();
-    }, [authToken, setAuthToken, setIncognitoJob]);
+        getIncognitoStatus(setIncognitoJob);
+    }, [setIncognitoJob]);
 
     const handleToggle = () => {
-        const csrfToken = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('csrftoken='))
-            ?.split('=')[1];
-
         const payload = {
             method: 'PATCH',
             headers: {
                 "Accept": "application/json",
                 "content-type": "application/json",
-                "Authorization": authToken,
-                "X-CSRFToken": csrfToken,
             },
             body: JSON.stringify(
                 {
@@ -52,7 +32,7 @@ const Admin = () => {
         let newIncognitoJob = {...incognitoJob}
         newIncognitoJob.running = !newIncognitoJob.running
 
-        fetch("https://bengarlock.com/api/v1/competition/job_status/" + incognitoJob.id + "/", payload)
+        fetch(`${APP_BASE_PATH}/api/incognito-status`, payload)
             .then(res => res.json())
             .then(() => setIncognitoJob(newIncognitoJob))
             .catch(err => console.log(err))

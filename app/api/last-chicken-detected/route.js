@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server';
+import {backendAuthHeaders, clearBackendAuthorization} from '../backend-auth';
 
 const EVENTS_API_URL =
     process.env.FUZZBALLS_UNIFI_EVENTS_API_URL || 'https://bengarlock.com/api/v1/unifi/events/';
@@ -17,17 +18,18 @@ const CLIP_LIVE_GUARD_MS = 15 * 1000;
 const CLIP_CONTEXT_SECONDS = 2;
 const MAX_CATCH_UP_SECONDS = 10 * 60;
 
-function authHeaders(request, extra = {}) {
-    const authorization = request.headers.get('authorization');
-    return {
-        Accept: 'application/json',
-        ...(authorization ? {Authorization: authorization} : {}),
-        ...extra,
-    };
-}
-
 async function readJson(response, fallbackMessage) {
     return response.json().catch(() => ({message: fallbackMessage}));
+}
+
+function clearExpiredAuth(response) {
+    if (!response.ok && (response.status === 401 || response.status === 403)) {
+        clearBackendAuthorization();
+    }
+}
+
+function upstreamError(error, message) {
+    return NextResponse.json({message: error.message || message}, {status: 502});
 }
 
 function eventList(data) {
@@ -82,12 +84,18 @@ export async function POST(request) {
         );
     }
 
-    const eventsResponse = await fetch(EVENTS_API_URL, {
-        method: 'GET',
-        headers: authHeaders(request),
-        cache: 'no-store',
-    });
+    let eventsResponse;
+    try {
+        eventsResponse = await fetch(EVENTS_API_URL, {
+            method: 'GET',
+            headers: await backendAuthHeaders(),
+            cache: 'no-store',
+        });
+    } catch (error) {
+        return upstreamError(error, 'Event lookup failed.');
+    }
     const eventsJson = await readJson(eventsResponse, `Event lookup failed with HTTP ${eventsResponse.status}.`);
+    clearExpiredAuth(eventsResponse);
 
     if (!eventsResponse.ok) {
         return NextResponse.json(eventsJson, {status: eventsResponse.status});
@@ -103,18 +111,24 @@ export async function POST(request) {
 
     const requestedAt = safeClipInstant(event);
     const secondsAfter = catchUpSecondsAfter(event);
-    const clipResponse = await fetch(CLIP_API_URL, {
-        method: 'POST',
-        headers: authHeaders(request, {'Content-Type': 'application/json'}),
-        body: JSON.stringify({
-            at: requestedAt,
-            camera_id: CLIP_CAMERA_ID.trim(),
-            seconds_before: CLIP_CONTEXT_SECONDS,
-            seconds_after: secondsAfter,
-        }),
-        cache: 'no-store',
-    });
+    let clipResponse;
+    try {
+        clipResponse = await fetch(CLIP_API_URL, {
+            method: 'POST',
+            headers: await backendAuthHeaders({'Content-Type': 'application/json'}),
+            body: JSON.stringify({
+                at: requestedAt,
+                camera_id: CLIP_CAMERA_ID.trim(),
+                seconds_before: CLIP_CONTEXT_SECONDS,
+                seconds_after: secondsAfter,
+            }),
+            cache: 'no-store',
+        });
+    } catch (error) {
+        return upstreamError(error, 'Clip request failed.');
+    }
     const clipJson = await readJson(clipResponse, `Clip request failed with HTTP ${clipResponse.status}.`);
+    clearExpiredAuth(clipResponse);
 
     if (!clipResponse.ok) {
         return NextResponse.json(clipJson, {status: clipResponse.status});
@@ -154,13 +168,19 @@ export async function DELETE(request) {
         return NextResponse.json({message: 'A clip filename is required.'}, {status: 400});
     }
 
-    const response = await fetch(CLIP_API_URL, {
-        method: 'DELETE',
-        headers: authHeaders(request, {'Content-Type': 'application/json'}),
-        body: JSON.stringify({filename: payload.filename}),
-        cache: 'no-store',
-    });
+    let response;
+    try {
+        response = await fetch(CLIP_API_URL, {
+            method: 'DELETE',
+            headers: await backendAuthHeaders({'Content-Type': 'application/json'}),
+            body: JSON.stringify({filename: payload.filename}),
+            cache: 'no-store',
+        });
+    } catch (error) {
+        return upstreamError(error, 'Clip deletion failed.');
+    }
     const json = await readJson(response, `Clip deletion failed with HTTP ${response.status}.`);
+    clearExpiredAuth(response);
 
     return NextResponse.json(json, {status: response.status});
 }

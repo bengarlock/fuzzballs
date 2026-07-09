@@ -1,27 +1,23 @@
 'use client'
 
-const getIncognitoStatus = (setIncognitoJob, authToken) => {
+const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
 
-
-    const csrfToken = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('csrftoken='))
-        ?.split('=')[1];
-
-    const payload = {
+const getIncognitoStatus = (setIncognitoJob) => {
+    fetch(`${APP_BASE_PATH}/api/incognito-status`, {
         method: 'GET',
         headers: {
-            "X-CSRFToken": csrfToken,
             "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": authToken
         },
         redirect: "follow",
-    }
-    fetch("https://bengarlock.com/api/v1/competition/job_status/", payload)
-        .then(response => response.json())
-        .then(results => {
-            const incognitoStatus = results.find((i) => i.job_name === "fuzzballs_incognito")
+    })
+        .then(async (response) => {
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(result.message || result.detail || `HTTP ${response.status}`);
+            }
+            return result;
+        })
+        .then((incognitoStatus) => {
             setIncognitoJob(incognitoStatus)
 
         })
