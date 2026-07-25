@@ -1,0 +1,22 @@
+{
+  "name": "Featherballs",
+  "short_name": "Featherballs",
+  "description": "Get your daily dose of feathers.",
+  "start_url": "/featherballs/",
+  "scope": "/featherballs/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff8a00",
+  "icons": [
+    {
+      "src": "/featherballs/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/featherballs/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
