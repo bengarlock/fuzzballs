@@ -2,9 +2,13 @@ import {NextResponse} from 'next/server';
 import {backendAuthHeaders, clearBackendAuthorization} from '../backend-auth';
 
 const JOB_STATUS_API_URL =
+    process.env.FEATHERBALLS_JOB_STATUS_API_URL ||
     process.env.FUZZBALLS_JOB_STATUS_API_URL ||
     'https://bengarlock.com/api/v1/competition/job_status/';
-const INCOGNITO_JOB_NAME = process.env.FUZZBALLS_INCOGNITO_JOB_NAME || 'fuzzballs_incognito';
+const INCOGNITO_JOB_NAME =
+    process.env.FEATHERBALLS_INCOGNITO_JOB_NAME ||
+    process.env.FUZZBALLS_INCOGNITO_JOB_NAME ||
+    'fuzzballs_incognito';
 
 async function readJson(response, fallbackMessage) {
     return response.json().catch(() => ({message: fallbackMessage}));

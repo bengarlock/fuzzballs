@@ -4,13 +4,13 @@ import "./globals.css";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
-    title: "Fuzzballs",
-    description: "Get your daily dose of fuzz.",
+    title: "Featherballs",
+    description: "Get your daily dose of feathers.",
     icons: {
-        icon: "/favicon.ico",
+        icon: "/featherballs/favicon.ico",
         apple: [
             {
-                url: "/apple-touch-icon.png",
+                url: "/featherballs/apple-touch-icon.png",
                 sizes: "180x180",
                 type: "image/png",
             },

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import {useCallback, useEffect, useState} from "react";
+import {APP_BASE_PATH} from "@/app/config";
 
-const basePath = "/fuzzballs/media/gallery";
+const basePath = `${APP_BASE_PATH}/media/gallery`;
 
 const galleryItems = [
     {type: "video", src: "IMG_0156.mp4", poster: "F0005572-76E9-4CA6-B7DA-593D338449BF_1_105_c.jpeg", width: 720, height: 1280, caption: "Found the secret nesting spot", date: "May 2026"},
@@ -95,7 +96,7 @@ export default function Gallery() {
                         Chickie Cam
                     </Link>
                     <span className="hidden text-xs font-bold uppercase tracking-[0.25em] text-stone-600 sm:block">
-                        Fuzzballs archive
+                        Featherballs archive
                     </span>
                 </nav>
 

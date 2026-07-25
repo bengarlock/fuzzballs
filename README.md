@@ -14,7 +14,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000/fuzzballs](http://localhost:3000/fuzzballs) with your browser to see the result.
+Open [http://localhost:3000/featherballs](http://localhost:3000/featherballs) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
@@ -25,19 +25,21 @@ Backend API credentials are only used by Next.js API routes. Configure them in t
 Required:
 
 ```bash
-FUZZBALLS_API_USERNAME=
-FUZZBALLS_API_PASSWORD=
+FEATHERBALLS_API_USERNAME=
+FEATHERBALLS_API_PASSWORD=
 ```
 
 Optional overrides:
 
 ```bash
-FUZZBALLS_LOGIN_API_URL=
-FUZZBALLS_JOB_STATUS_API_URL=
-FUZZBALLS_WEATHER_API_URL=
-FUZZBALLS_UNIFI_EVENTS_API_URL=
-FUZZBALLS_NVR_CLIPS_API_URL=
+FEATHERBALLS_LOGIN_API_URL=
+FEATHERBALLS_JOB_STATUS_API_URL=
+FEATHERBALLS_WEATHER_API_URL=
+FEATHERBALLS_UNIFI_EVENTS_API_URL=
+FEATHERBALLS_NVR_CLIPS_API_URL=
 ```
+
+Legacy `FUZZBALLS_*` variables remain supported during the production transition.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
