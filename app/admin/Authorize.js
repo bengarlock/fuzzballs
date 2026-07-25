@@ -1,4 +1,4 @@
-const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
+import {APP_BASE_PATH} from "@/app/config";
 
 const Authorize = async () => {
     try {

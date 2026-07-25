@@ -4,8 +4,7 @@ import {useEffect} from "react";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
-
-const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
+import {APP_BASE_PATH} from "@/app/config";
 
 const Admin = () => {
 
@@ -67,7 +66,7 @@ const Admin = () => {
                         </div>
                     </label>
                     <div className='m-3'>
-                        <a href='https://bengarlock.com/fuzzballs/'>Home</a>
+                        <a href='https://bengarlock.com/featherballs/'>Home</a>
                     </div>
                 </div>
             ) : (

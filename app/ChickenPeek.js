@@ -1,5 +1,7 @@
 'use client';
 
+import {APP_BASE_PATH} from "@/app/config";
+
 export default function ChickenPeek() {
     return (
         <div
@@ -7,7 +9,7 @@ export default function ChickenPeek() {
             aria-hidden="true"
         >
             <img
-                src="/fuzzballs/media/peeks/chicken.png"
+                src={`${APP_BASE_PATH}/media/peeks/chicken.png`}
                 alt=""
                 width={928}
                 height={1485}

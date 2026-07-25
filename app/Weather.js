@@ -1,8 +1,8 @@
 'use client'
 import {useEffect, useState} from "react";
 import {globalStore} from "@/app/globalstore";
+import {APP_BASE_PATH} from "@/app/config";
 
-const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
 const WEATHER_API = `${APP_BASE_PATH}/api/weather`;
 
 const Weather = () => {

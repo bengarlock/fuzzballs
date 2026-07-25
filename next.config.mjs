@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
-    basePath: '/fuzzballs',
+    basePath: '/featherballs',
     async redirects() {
         if (process.env.NODE_ENV !== 'development') return [];
 
         return [
             {
                 source: '/',
-                destination: '/fuzzballs',
+                destination: '/featherballs',
                 permanent: false,
                 basePath: false
             }
