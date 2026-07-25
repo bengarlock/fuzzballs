@@ -3,6 +3,9 @@ import "./globals.css";
 
 const inter = Inter({subsets: ["latin"]});
 
+// Clean production rebuilds replace hashed assets, so page HTML must not outlive a deployment.
+export const dynamic = "force-dynamic";
+
 export const metadata = {
     title: "Featherballs",
     description: "Get your daily dose of feathers.",
