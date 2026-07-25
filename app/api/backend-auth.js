@@ -1,4 +1,5 @@
 const LOGIN_API_URL =
+    process.env.FEATHERBALLS_LOGIN_API_URL ||
     process.env.FUZZBALLS_LOGIN_API_URL ||
     process.env.BENGARLOCK_LOGIN_API_URL ||
     'https://bengarlock.com/api/v1/login/';
@@ -10,9 +11,11 @@ const CACHE_TTL_MS = 10 * 60 * 1000;
 function credentials() {
     return {
         username:
+            process.env.FEATHERBALLS_API_USERNAME ||
             process.env.FUZZBALLS_API_USERNAME ||
             process.env.BENGARLOCK_API_USERNAME,
         password:
+            process.env.FEATHERBALLS_API_PASSWORD ||
             process.env.FUZZBALLS_API_PASSWORD ||
             process.env.BENGARLOCK_API_PASSWORD,
     };

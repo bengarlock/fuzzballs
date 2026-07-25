@@ -1,8 +1,8 @@
 'use client';
 
 import {useEffect, useMemo, useRef, useState} from 'react';
+import {APP_BASE_PATH} from "@/app/config";
 
-const APP_BASE_PATH = process.env.NEXT_PUBLIC_FUZZBALLS_BASE_PATH || '/fuzzballs';
 const LAST_CHICKEN_API = `${APP_BASE_PATH}/api/last-chicken-detected`;
 
 function formatEventTime(value) {

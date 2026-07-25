@@ -15,6 +15,7 @@ import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
 import {useEffect, useMemo} from "react";
 import ChickenPeek from "@/app/ChickenPeek";
 import Link from "next/link";
+import {APP_BASE_PATH} from "@/app/config";
 
 export default function LiveStream() {
     const {
@@ -36,8 +37,8 @@ export default function LiveStream() {
     const streamUrl = () =>
         `${
             isDay
-                ? "https://bengarlock.com/fuzzballs/run/index.m3u8"
-                : "https://bengarlock.com/fuzzballs/roost/index.m3u8"
+                ? `https://bengarlock.com${APP_BASE_PATH}/run/index.m3u8`
+                : `https://bengarlock.com${APP_BASE_PATH}/roost/index.m3u8`
         }?t=${Date.now()}`;
 
     const airTempC = Number(weather?.air_temperature);
@@ -71,8 +72,8 @@ export default function LiveStream() {
                     className="absolute inset-0 bg-cover bg-center scale-110"
                     style={{
                         backgroundImage: isWinter
-                            ? "url('/fuzzballs/media/photos/background-winter.jpeg')"
-                            : "url('/fuzzballs/media/photos/headerbar.jpeg')",
+                            ? `url('${APP_BASE_PATH}/media/photos/background-winter.jpeg')`
+                            : `url('${APP_BASE_PATH}/media/photos/headerbar.jpeg')`,
                         position: "fixed",
                     }}
                 />

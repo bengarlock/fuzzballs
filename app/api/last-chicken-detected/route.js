@@ -2,18 +2,28 @@ import {NextResponse} from 'next/server';
 import {backendAuthHeaders, clearBackendAuthorization} from '../backend-auth';
 
 const EVENTS_API_URL =
+    process.env.FEATHERBALLS_UNIFI_EVENTS_API_URL ||
     process.env.FUZZBALLS_UNIFI_EVENTS_API_URL || 'https://bengarlock.com/api/v1/unifi/events/';
 const CLIP_API_URL =
+    process.env.FEATHERBALLS_NVR_CLIPS_API_URL ||
     process.env.FUZZBALLS_NVR_CLIPS_API_URL ||
     process.env.GARDEN_NVR_CLIPS_API_URL ||
     'https://bengarlock.com/api/v1/garden/nvr-clips/';
 const CLIP_CAMERA_ID =
+    process.env.FEATHERBALLS_UNIFI_CAMERA_ID ||
     process.env.FUZZBALLS_UNIFI_CAMERA_ID ||
     process.env.UNIFI_PROTECT_CAMERA_ID ||
+    process.env.NEXT_PUBLIC_FEATHERBALLS_CAMERA_ID ||
     process.env.NEXT_PUBLIC_FUZZBALLS_CAMERA_ID ||
     '';
-const EVENT_CAMERA_ID = process.env.FUZZBALLS_UNIFI_EVENT_CAMERA_ID || CLIP_CAMERA_ID;
-const MOTION_EVENT_TYPE = process.env.FUZZBALLS_UNIFI_MOTION_EVENT_TYPE || 'motion';
+const EVENT_CAMERA_ID =
+    process.env.FEATHERBALLS_UNIFI_EVENT_CAMERA_ID ||
+    process.env.FUZZBALLS_UNIFI_EVENT_CAMERA_ID ||
+    CLIP_CAMERA_ID;
+const MOTION_EVENT_TYPE =
+    process.env.FEATHERBALLS_UNIFI_MOTION_EVENT_TYPE ||
+    process.env.FUZZBALLS_UNIFI_MOTION_EVENT_TYPE ||
+    'motion';
 const CLIP_LIVE_GUARD_MS = 15 * 1000;
 const CLIP_CONTEXT_SECONDS = 2;
 const MAX_CATCH_UP_SECONDS = 10 * 60;
@@ -73,13 +83,13 @@ function catchUpSecondsAfter(event) {
 export async function POST(request) {
     if (!CLIP_CAMERA_ID.trim()) {
         return NextResponse.json(
-            {message: 'FUZZBALLS_UNIFI_CAMERA_ID or UNIFI_PROTECT_CAMERA_ID must be set.'},
+            {message: 'FEATHERBALLS_UNIFI_CAMERA_ID or UNIFI_PROTECT_CAMERA_ID must be set.'},
             {status: 500},
         );
     }
     if (!EVENT_CAMERA_ID.trim()) {
         return NextResponse.json(
-            {message: 'FUZZBALLS_UNIFI_EVENT_CAMERA_ID must be set.'},
+            {message: 'FEATHERBALLS_UNIFI_EVENT_CAMERA_ID must be set.'},
             {status: 500},
         );
     }

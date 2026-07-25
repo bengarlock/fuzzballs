@@ -2,6 +2,7 @@ import {NextResponse} from 'next/server';
 import {backendAuthHeaders, clearBackendAuthorization} from '../backend-auth';
 
 const WEATHER_API_URL =
+    process.env.FEATHERBALLS_WEATHER_API_URL ||
     process.env.FUZZBALLS_WEATHER_API_URL || 'https://bengarlock.com/api/v1/garden/weather/';
 
 async function jsonResponse(response, fallbackMessage) {
