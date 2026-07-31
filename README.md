@@ -41,6 +41,24 @@ FEATHERBALLS_NVR_CLIPS_API_URL=
 
 Legacy `FUZZBALLS_*` variables remain supported during the production transition.
 
+## Voyager stream operations
+
+Voyager bridges two UniFi Protect RTSPS streams into HLS with
+`ffmpeg-run.service` and `ffmpeg-roost.service`. Operational files live under
+`ops/`.
+
+- FFmpeg uses systemd's native bounded restart backoff, from 5 seconds up to
+  5 minutes. A long Protect outage therefore cannot create a restart storm or
+  permanently trip systemd's start limit.
+- `fuzzballs-stream-monitor.timer` observes service state, playlist freshness,
+  and Protect port `7441`. It records transitions such as `healthy`,
+  `upstream_unavailable`, `recovering`, and `local_service_unavailable`.
+- The monitor never restarts FFmpeg, Nginx, gunicorn, or another local service.
+  FFmpeg recovery belongs to systemd.
+- `ops/install_voyager_stream_monitor.sh` removes the obsolete root-cron
+  detector from service, moves its two scripts into a timestamped backup under
+  `/var/backups`, and installs the systemd drop-ins and timer.
+
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
