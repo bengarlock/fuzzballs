@@ -1,0 +1,14 @@
+[Unit]
+Description=Observe UniFi Protect to Fuzzballs HLS bridge health
+After=network-online.target ffmpeg-run.service ffmpeg-roost.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/libexec/fuzzballs-stream-monitor
+StateDirectory=fuzzballs-stream-monitor
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/fuzzballs-stream-monitor
