@@ -19,63 +19,12 @@ const HLSPlayer = ({
     // loading | playing | stalled | offline
     const [showStatusBadge, setShowStatusBadge] = useState(false);
 
-    const startPlayback = async () => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        video.muted = true;
-
-        try {
-            await video.play();
-            setStatus('playing');
-        } catch {
-            setStatus('stalled');
-        }
-    };
-
-    const initHls = () => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        if (hlsRef.current) {
-            hlsRef.current.destroy();
-        }
-
-        const hls = new Hls({
-            lowLatencyMode: true,
-            backBufferLength: 30,
-            maxLiveSyncPlaybackRate: 1.5,
-        });
-
-        hlsRef.current = hls;
-
-        hls.loadSource(src);
-        hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
-
-        hls.on(Hls.Events.ERROR, (_, data) => {
-            if (data.fatal) {
-                setStatus('offline');
-                retryTimeout.current = setTimeout(initHls, 3000);
-            } else {
-                setStatus('stalled');
-            }
-        });
-    };
-
     useEffect(() => {
         // Hide immediately when playing; delay showing for transient hiccups.
-        if (status === 'playing') {
-            setShowStatusBadge(false);
-            clearTimeout(badgeDelayTimeout.current);
-            return;
-        }
-
         clearTimeout(badgeDelayTimeout.current);
         badgeDelayTimeout.current = setTimeout(() => {
-            setShowStatusBadge(true);
-        }, 900);
+            setShowStatusBadge(status !== 'playing');
+        }, status === 'playing' ? 0 : 900);
 
         return () => clearTimeout(badgeDelayTimeout.current);
     }, [status]);
@@ -85,6 +34,40 @@ const HLSPlayer = ({
         if (!video) return;
 
         setStatus('loading');
+
+        const startPlayback = async () => {
+            video.muted = true;
+
+            try {
+                await video.play();
+                setStatus('playing');
+            } catch {
+                setStatus('stalled');
+            }
+        };
+
+        const initHls = () => {
+            hlsRef.current?.destroy();
+
+            const hls = new Hls({
+                lowLatencyMode: true,
+                backBufferLength: 30,
+                maxLiveSyncPlaybackRate: 1.5,
+            });
+
+            hlsRef.current = hls;
+            hls.loadSource(src);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, startPlayback);
+            hls.on(Hls.Events.ERROR, (_, data) => {
+                if (data.fatal) {
+                    setStatus('offline');
+                    retryTimeout.current = setTimeout(initHls, 3000);
+                } else {
+                    setStatus('stalled');
+                }
+            });
+        };
 
         if (Hls.isSupported()) {
             initHls();
