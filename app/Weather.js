@@ -11,11 +11,6 @@ const Weather = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        fetchWeather();
-    }, []);
-
-
-    const fetchWeather = () => {
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
@@ -50,7 +45,7 @@ const Weather = () => {
                 setError(error.message ?? String(error));
                 console.error(error);
             });
-    }
+    }, [setWeather]);
 
     const renderWeather = () => {
         if (!weather?.air_temperature) return null;

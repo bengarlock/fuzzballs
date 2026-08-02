@@ -12,7 +12,7 @@ import Image from "next/image";
 import incognitoImage from "@/public/media/incognito.png";
 import {globalStore} from "@/app/globalstore";
 import getIncognitoStatus from "@/app/admin/getIncognitoStatus";
-import {useEffect, useMemo} from "react";
+import {useEffect, useState} from "react";
 import ChickenPeek from "@/app/ChickenPeek";
 import Link from "next/link";
 import {APP_BASE_PATH} from "@/app/config";
@@ -34,18 +34,19 @@ export default function LiveStream() {
         getIncognitoStatus(setIncognitoJob);
     }, [setIncognitoJob]);
 
-    const streamUrl = () =>
+    const [streamCacheKey] = useState(() => Date.now());
+    const streamUrl =
         `${
             isDay
                 ? `https://bengarlock.com${APP_BASE_PATH}/run/index.m3u8`
                 : `https://bengarlock.com${APP_BASE_PATH}/roost/index.m3u8`
-        }?t=${Date.now()}`;
+        }?t=${streamCacheKey}`;
 
     const airTempC = Number(weather?.air_temperature);
     const tempF = Number.isFinite(airTempC) ? (airTempC * 9 / 5) + 32 : null;
     const showSnow = tempF !== null && Math.ceil(tempF) <= 32;
     const snowflakeCount = 28;
-    const snowflakes = useMemo(() => (
+    const [snowflakes] = useState(() => (
         Array.from({length: snowflakeCount}, () => {
             const left = Math.random() * 100;
             const size = 2 + Math.random() * 4;
@@ -62,7 +63,7 @@ export default function LiveStream() {
                 "--drift": `${drift.toFixed(0)}px`
             };
         })
-    ), []);
+    ));
 
     return (
         <div className="relative min-h-screen overflow-hidden">
@@ -139,7 +140,7 @@ export default function LiveStream() {
                                 >
                                     <LastChickenDetected>
                                         <HLSPlayer
-                                            src={streamUrl()}
+                                            src={streamUrl}
                                             autoPlay
                                             muted
                                             controls
