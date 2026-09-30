@@ -66,7 +66,7 @@ export default function LiveStream() {
     ));
 
     return (
-        <div className="relative min-h-screen overflow-hidden">
+        <div className="relative min-h-[calc(100vh-var(--ds9-staging-banner-height,0px))] overflow-hidden">
             {/* Background */}
             {hasTemp && (
                 <div
